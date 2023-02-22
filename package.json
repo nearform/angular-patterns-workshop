@@ -7,7 +7,10 @@
   "scripts": {
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "slides:start": "slidev --open",
+    "slides:build": "slidev build",
+    "slides:export": "slidev export"
   },
   "repository": {
     "type": "git",
@@ -28,9 +31,13 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "slidev-theme-nearform": "^1.5.0"
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.40.3"
   }
 }
