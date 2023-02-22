@@ -1,6 +1,6 @@
 ![CI](https://github.com/nearform/hub-template/actions/workflows/ci.yml/badge.svg?event=push)
 
-# Hub Template
+# Angular patterns workshop
 
 A feature-packed template to start a new repository on the hub, including:
 
