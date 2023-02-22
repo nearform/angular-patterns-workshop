@@ -4,7 +4,7 @@
   "description": "Angular patterns workshop",
   "main": "index.js",
   "scripts": {
-    "start": "nx serve",
+    "dev": "nx serve",
     "build": "nx build",
     "test": "nx test",
     "lint": "nx lint",
