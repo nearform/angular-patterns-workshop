@@ -1,0 +1,2 @@
+<button mat-stroked-button *ngIf="loggedOut$ | async" (click)="login()">Login</button>
+<button mat-stroked-button *ngIf="loggedIn$ | async" (click)="logout()">Logout</button>
