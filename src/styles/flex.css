@@ -1,0 +1,8 @@
+/**
+ Flex: use it to space out items horizontally with some
+ */
+.flex {
+  display: flex;
+  gap: var(--space-medium);
+  align-items: center;
+}
