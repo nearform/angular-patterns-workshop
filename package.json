@@ -50,7 +50,7 @@
     "@angular-eslint/template-parser": "~15.0.0",
     "@angular/cli": "~15.1.0",
     "@angular/compiler-cli": "~15.1.0",
-    "@angular/language-service": "~15.1.0",
+    "@angular/language-service": "~15.2.0",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@nrwl/cypress": "15.7.2",
