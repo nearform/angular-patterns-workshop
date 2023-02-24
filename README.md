@@ -16,5 +16,5 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
 ### Setup
 - clone this repository
 - `npm i`
-- `npm run dev` to start the application
+- `npm start` to start the application
 - [optional] `npm run slides:start` to start the slide deck

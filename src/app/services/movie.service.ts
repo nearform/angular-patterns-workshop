@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
 import { Paged, PagedApi } from './paged'
-import { map } from 'rxjs'
+import { filter, map, switchMap, throwError } from 'rxjs'
+import { authStore } from './auth.service'
+import { select } from '@ngneat/elf'
 
 export type MovieSummaryApi = {
   adult: boolean
@@ -27,6 +29,17 @@ export type MovieSummary = {
   poster?: string
 }
 
+type WatchListRequest = {
+  media_type: 'movie' | 'tv'
+  media_id: number
+  watchlist: boolean
+}
+
+type WatchListResponse = {
+  status_code?: string
+  status_message?: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,5 +63,38 @@ export class MovieService {
           totalResults: data.total_results
         }))
       )
+  }
+
+  postWatchlist(movieId: number, isAdding: boolean) {
+    const userId = authStore.getValue().user?.id
+    if (!userId) {
+      return throwError(() => new Error('Requires user id'))
+    }
+    return this.api.post<WatchListRequest, WatchListResponse>({
+      url: `account/${userId}/watchlist`,
+      body: {
+        media_type: 'movie',
+        media_id: movieId,
+        watchlist: isAdding
+      }
+    })
+  }
+
+  getUserWatchList() {
+    return authStore.pipe(
+      select(state => state.user?.id),
+      filter(Boolean),
+      switchMap(userId =>
+        this.api.get<PagedApi<MovieSummaryApi>>({
+          url: `account/${userId}/watchlist/movies`
+        })
+      ),
+      map(data => ({
+        page: data.page,
+        totalPages: data.total_pages,
+        results: data.results.map(movie => movie.id),
+        totalResults: data.total_results
+      }))
+    )
   }
 }
