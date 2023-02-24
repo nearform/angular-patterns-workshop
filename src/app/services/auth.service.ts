@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
-import { createStore, select, withProps } from '@ngneat/elf'
-import { filter, map, switchMap, tap } from 'rxjs'
-import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state'
+import { createStore, withProps } from '@ngneat/elf'
+import { EMPTY, map, switchMap, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
 
 type UserAvatarApi = {
@@ -56,6 +55,9 @@ type DeleteAccessTokenResponse = {
   status_code: number
 }
 
+const LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY = 'auth_request_token'
+const LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY = 'auth_request_token'
+
 const defaultState: AuthProps = {
   user: null,
   requestToken: null,
@@ -66,17 +68,12 @@ export const authStore = createStore(
   {
     name: 'auth'
   },
-  withProps<AuthProps>(defaultState)
+  withProps<AuthProps>({
+    ...defaultState,
+    requestToken: localStorage.getItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY),
+    accessToken: localStorage.getItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY)
+  })
 )
-
-persistState(authStore, {
-  key: 'auth',
-  storage: localStorageStrategy,
-  source: store =>
-    store.pipe(
-      map(({ requestToken, accessToken }) => ({ requestToken, accessToken }))
-    )
-})
 
 @Injectable({
   providedIn: 'root'
@@ -108,6 +105,10 @@ export class AuthService {
             ...state,
             requestToken: response.request_token
           }))
+          localStorage.setItem(
+            LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY,
+            response.request_token
+          )
         }),
         map(
           response =>
@@ -130,64 +131,65 @@ export class AuthService {
         },
         error: () => {
           authStore.update(state => ({ ...state, user: null }))
+          localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
+          localStorage.removeItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY)
         }
       })
     )
   }
 
   completeSignIn() {
-    return authStore.pipe(
-      select(state => state.requestToken),
-      switchMap(requestToken =>
-        this.api
-          .post<{ request_token: string }, AccessTokenResponse>({
-            url: 'auth/access_token',
-            version: 4,
-            body: { request_token: requestToken! },
-            headers: {
-              Authorization: `Bearer ${environment.readonlyAccessToken}`
-            }
-          })
-          .pipe(
-            tap(({ access_token }) =>
-              authStore.update(state => ({
-                ...state,
-                accessToken: access_token
-              }))
-            ),
-            switchMap(() => this.fetchUser())
-          )
+    // TODO An extra (but cancelled) call is being made here for some reason
+    return this.api
+      .post<{ request_token: string }, AccessTokenResponse>({
+        url: 'auth/access_token',
+        version: 4,
+        body: { request_token: authStore.getValue().requestToken! },
+        headers: {
+          Authorization: `Bearer ${environment.readonlyAccessToken}`
+        }
+      })
+      .pipe(
+        tap(({ access_token }) => {
+          authStore.update(state => ({
+            ...state,
+            accessToken: access_token
+          }))
+          localStorage.setItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY, access_token)
+        }),
+        switchMap(() => this.fetchUser())
       )
-    )
   }
 
   restoreSession() {
-    return authStore.pipe(
-      select(state => state.accessToken),
-      tap(sessionId => {
-        if (!sessionId) {
-          authStore.update(state => ({ ...state }))
-        }
-      }),
-      filter(Boolean),
-      switchMap(() => this.fetchUser())
-    )
+    if (authStore.getValue().accessToken) {
+      return this.fetchUser()
+    } else {
+      return EMPTY
+    }
   }
 
   signOut() {
-    return authStore.pipe(
-      tap(() => authStore.update(() => defaultState)),
-      filter((authProps: AuthProps) => Boolean(authProps.accessToken)),
-      switchMap(store =>
-        this.api.delete<{ access_token: string }, DeleteAccessTokenResponse>({
-          url: 'auth/access_token',
-          version: 4,
-          body: { access_token: store.accessToken! },
-          headers: {
-            Authorization: `Bearer ${environment.readonlyAccessToken}`
-          }
+    const accessToken = authStore.getValue().accessToken
+    if (!accessToken) {
+      return EMPTY
+    }
+    // TODO for some reason an extra call to the DELETE endpoint is still being made
+    return this.api
+      .delete<{ access_token: string }, DeleteAccessTokenResponse>({
+        url: 'auth/access_token',
+        version: 4,
+        body: { access_token: accessToken },
+        headers: {
+          Authorization: `Bearer ${environment.readonlyAccessToken}`
+        }
+      })
+      .pipe(
+        tap(() => {
+          authStore.update(() => defaultState)
+          localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
+          localStorage.removeItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY)
         })
       )
-    )
   }
 }

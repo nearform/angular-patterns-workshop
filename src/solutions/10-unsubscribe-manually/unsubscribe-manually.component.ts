@@ -19,8 +19,7 @@ import { MatInputModule } from '@angular/material/input'
     MatButtonModule,
     MatInputModule
   ],
-  templateUrl: './unsubscribe-manually.component.html',
-  styleUrls: ['./unsubscribe-manually.component.css']
+  templateUrl: './unsubscribe-manually.component.html'
 })
 export class UnsubscribeManuallyComponent {
   movies$ = this.moviesService.getPopular().pipe(map(data => data.results))

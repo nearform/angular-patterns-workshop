@@ -21,7 +21,7 @@ export class AuthApprovedComponent implements OnDestroy, OnInit {
       .completeSignIn()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(() => {
-        this.router.navigate([''])
+        this.router.navigate(['/'])
       })
   }
 

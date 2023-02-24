@@ -18,6 +18,8 @@ export class AuthButtonComponent implements OnInit, OnDestroy {
   loggedOut$ = this.authService.loggedOut$
   loggedIn$ = this.authService.loggedOut$.pipe(map(loggedOut => !loggedOut))
 
+  userName$ = this.authService.state$.pipe(map(state => state.user?.username))
+
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
