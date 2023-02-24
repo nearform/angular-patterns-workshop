@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
 import { createStore, withProps } from '@ngneat/elf'
 import { EMPTY, map, switchMap, tap } from 'rxjs'
-import { environment } from '../../environments/environment'
+import { environment } from 'src/environments/environment'
 
 type UserAvatarApi = {
   gravatar: {
