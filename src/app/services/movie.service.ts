@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
 import { Paged, PagedApi } from './paged'
-import { filter, map, switchMap, throwError } from 'rxjs'
+import {
+  combineLatest,
+  filter,
+  map,
+  startWith,
+  Subject,
+  switchMap,
+  tap,
+  throwError
+} from 'rxjs'
 import { authStore } from './auth.service'
 import { select } from '@ngneat/elf'
 
@@ -44,6 +53,9 @@ type WatchListResponse = {
   providedIn: 'root'
 })
 export class MovieService {
+  // Triggered after an update to the watch list and used to re-trigger watch list query
+  private watchListUpdated$ = new Subject<void>()
+
   constructor(private api: ApiService) {}
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
@@ -70,19 +82,25 @@ export class MovieService {
     if (!userId) {
       return throwError(() => new Error('Requires user id'))
     }
-    return this.api.post<WatchListRequest, WatchListResponse>({
-      url: `account/${userId}/watchlist`,
-      body: {
-        media_type: 'movie',
-        media_id: movieId,
-        watchlist: isAdding
-      }
-    })
+    return this.api
+      .post<WatchListRequest, WatchListResponse>({
+        url: `account/${userId}/watchlist`,
+        body: {
+          media_type: 'movie',
+          media_id: movieId,
+          watchlist: isAdding
+        }
+      })
+      .pipe(tap(() => this.watchListUpdated$.next()))
   }
 
   getUserWatchList() {
-    return authStore.pipe(
-      select(state => state.user?.id),
+    // This uses the `this.watchListUpdated$` stream to re-trigger fetch
+    return combineLatest([
+      authStore.pipe(select(state => state.user?.id)),
+      this.watchListUpdated$.pipe(startWith(null))
+    ]).pipe(
+      map(([userId]) => userId),
       filter(Boolean),
       switchMap(userId =>
         this.api.get<PagedApi<MovieSummaryApi>>({

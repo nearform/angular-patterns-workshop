@@ -49,7 +49,12 @@ import { MatInputModule } from '@angular/material/input'
           >
             Add to watchlist
           </button>
-          <button mat-stroked-button color="warn" *ngIf="movie.onWatchList">
+          <button
+            mat-stroked-button
+            color="warn"
+            *ngIf="movie.onWatchList"
+            (click)="removeFromWatchList(movie.id)"
+          >
             Remove from watchlist
           </button>
         </mat-card-actions>
@@ -59,6 +64,10 @@ import { MatInputModule } from '@angular/material/input'
 })
 export class UnsubscribeManuallyComponent implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
+
+  addToWatchList$ = new Subject<number>()
+  removeFromWatchList$ = new Subject<number>()
+
   private popularMovies$ = this.moviesService
     .getPopular()
     .pipe(map(data => data.results))
@@ -76,9 +85,6 @@ export class UnsubscribeManuallyComponent implements OnInit, OnDestroy {
       )
     })
   )
-
-  addToWatchList$ = new Subject<number>()
-  removeFromWatchList$ = new Subject<number>()
 
   constructor(private moviesService: MovieService) {}
 
