@@ -26,7 +26,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class WatchlistConditionalService {
+export class MovieService {
   // Triggered after an update to the watch list and used to re-trigger watch list query
   private watchlistUpdated$ = new Subject<void>()
 
