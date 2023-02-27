@@ -1,20 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatListModule } from '@angular/material/list'
-import {
-  combineLatest,
-  map,
-  startWith,
-  Subject,
-  switchMap,
-  takeUntil
-} from 'rxjs'
+import { combineLatest, map, Subject, switchMap, takeUntil } from 'rxjs'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { AddToWatchListConditionalService } from './add-to-watch-list-conditional.service'
-import { MovieSummary } from '../../app/types/movie-summary.types'
+import { withWatchlistFlag } from '../../app/utils/with-watch-list-flag'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
   selector: 'app-add-to-watch-list-conditional',
@@ -25,14 +19,21 @@ import { MovieSummary } from '../../app/types/movie-summary.types'
     MatSliderModule,
     MatCardModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   template: `
-    <ng-container *ngIf="{ isLoading: isLoading$ | async } as context">
-      <div *ngIf="context.isLoading">Loading...</div>
-      <ng-container *ngIf="!context.isLoading">
+    <ng-container *ngIf="movies$ | async as movies">
+      <div *ngIf="movies.isLoading" class="centered-content height-page">
+        <mat-progress-spinner
+          color="primary"
+          mode="indeterminate"
+          diameter="50"
+        ></mat-progress-spinner>
+      </div>
+      <ng-container *ngIf="!movies.isLoading">
         <div *ngIf="movies$ | async as movies" class="stack">
-          <mat-card *ngFor="let movie of movies">
+          <mat-card *ngFor="let movie of movies.data">
             <mat-card-header>
               <mat-card-title>{{ movie.title }}</mat-card-title>
             </mat-card-header>
@@ -48,7 +49,7 @@ import { MovieSummary } from '../../app/types/movie-summary.types'
               <button
                 mat-stroked-button
                 color="primary"
-                *ngIf="!movie.onWatchList"
+                *ngIf="!movie.onWatchlist"
                 (click)="addToWatchList(movie.id)"
               >
                 Add to watchlist
@@ -56,7 +57,7 @@ import { MovieSummary } from '../../app/types/movie-summary.types'
               <button
                 mat-stroked-button
                 color="warn"
-                *ngIf="movie.onWatchList"
+                *ngIf="movie.onWatchlist"
                 (click)="removeFromWatchList(movie.id)"
               >
                 Remove from watchlist
@@ -74,40 +75,14 @@ export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
   addToWatchList$ = new Subject<number>()
   removeFromWatchList$ = new Subject<number>()
 
-  private popularMoviesQuery$ = this.moviesService.getPopular()
-  private watchlistQuery$ = this.moviesService.getUserWatchList()
-
-  // Extract the actual results out of the response for each query
-  private popularMoviesItems$ = this.popularMoviesQuery$.pipe(
-    map(movies => (movies.data ? movies.data.results : []))
-  )
-  private watchlistItems$ = this.watchlistQuery$.pipe(
-    map(watchlist => (watchlist.data ? watchlist.data.results : [])),
-    startWith([])
-  )
-
-  isLoading$ = combineLatest([
-    this.popularMoviesQuery$,
-    this.watchlistQuery$
-  ]).pipe(
-    map(
-      ([popularMoviesQuery, watchListQuery]) =>
-        popularMoviesQuery.isLoading || watchListQuery.isLoading
-    ),
-    startWith(true)
-  )
-
   movies$ = combineLatest([
-    this.popularMoviesItems$,
-    this.watchlistItems$
+    this.moviesService.getPopular(),
+    this.moviesService.getUserWatchList()
   ]).pipe(
-    map(([movies, watchlist]) => {
-      return movies.map<MovieSummary & { onWatchList?: boolean }>(movie =>
-        watchlist.some(watchListMovieId => watchListMovieId === movie.id)
-          ? { ...movie, onWatchList: true }
-          : movie
-      )
-    })
+    map(([moviesQuery, watchlistQuery]) => ({
+      isLoading: moviesQuery.isLoading || watchlistQuery.isLoading,
+      data: withWatchlistFlag(moviesQuery?.data, watchlistQuery?.data)
+    }))
   )
 
   constructor(private moviesService: AddToWatchListConditionalService) {}

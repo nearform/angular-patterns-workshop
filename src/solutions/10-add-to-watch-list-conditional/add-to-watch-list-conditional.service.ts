@@ -12,7 +12,7 @@ import {
 import { select } from '@ngneat/elf'
 import { authStore } from '../../app/services/auth.service'
 import { ApiService } from '../../app/services/api.service'
-import { PagedApi, Paged } from '../../app/types/paged.types'
+import { PagedApi } from '../../app/types/paged.types'
 import {
   MovieSummary,
   MovieSummaryApi
@@ -45,22 +45,17 @@ export class AddToWatchListConditionalService {
       .get<PagedApi<MovieSummaryApi>>({ url: 'movie/popular' })
       .pipe(
         map(
-          (data): AsyncState<Paged<MovieSummary>> => ({
+          (data): AsyncState<MovieSummary[]> => ({
             isLoading: false,
-            data: {
-              page: data.page,
-              totalPages: data.total_pages,
-              results: data.results.map(movie => ({
-                id: movie.id,
-                title: movie.title,
-                description: movie.overview,
-                poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
-              })),
-              totalResults: data.total_results
-            }
+            data: data.results.map(movie => ({
+              id: movie.id,
+              title: movie.title,
+              description: movie.overview,
+              poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
+            }))
           })
         ),
-        startWith<AsyncState<Paged<MovieSummary>>>({ isLoading: true })
+        startWith<AsyncState<MovieSummary[]>>({ isLoading: true })
       )
   }
 
@@ -95,17 +90,12 @@ export class AddToWatchListConditionalService {
         })
       ),
       map(
-        (data): AsyncState<Paged<number>> => ({
+        (data): AsyncState<number[]> => ({
           isLoading: false,
-          data: {
-            page: data.page,
-            totalPages: data.total_pages,
-            results: data.results.map(movie => movie.id),
-            totalResults: data.total_results
-          }
+          data: data.results.map(movie => movie.id)
         })
       ),
-      startWith<AsyncState<Paged<number>>>({ isLoading: true })
+      startWith<AsyncState<number[]>>({ isLoading: true })
     )
   }
 }
