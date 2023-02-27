@@ -12,9 +12,11 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
 
 ### Requirements
 - Node LTS
+- A read only access token from [tmdb](https://developers.themoviedb.org/3/getting-started/authentication)
 
 ### Setup
-- clone this repository
+- Clone this repository
+- Copy `src/environment/environment.ts` to `src/environment/environment.development.ts` and update `readonlyAccessToken` to your token
 - `npm i`
-- `npm run dev` to start the application
+- `npm start` to start the application
 - [optional] `npm run slides:start` to start the slide deck
