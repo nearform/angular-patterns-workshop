@@ -4,6 +4,6 @@ import { CommonModule } from '@angular/common'
   selector: 'app-movie-list-03-component',
   standalone: true,
   imports: [CommonModule],
-  template: ` <p>first-component works!</p> `
+  template: `<p>Solution 3</p>`
 })
 export class MovieList03Component {}
