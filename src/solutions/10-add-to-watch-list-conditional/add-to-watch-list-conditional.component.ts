@@ -12,11 +12,12 @@ import {
 import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
-import { MovieService, MovieSummary } from '../../app/services/movie.service'
 import { MatInputModule } from '@angular/material/input'
+import { AddToWatchListConditionalService } from './add-to-watch-list-conditional.service'
+import { MovieSummary } from '../../app/types/movie-summary.types'
 
 @Component({
-  selector: 'app-unsubscribe-manually',
+  selector: 'app-add-to-watch-list-conditional',
   standalone: true,
   imports: [
     CommonModule,
@@ -62,7 +63,7 @@ import { MatInputModule } from '@angular/material/input'
     </div>
   `
 })
-export class UnsubscribeManuallyComponent implements OnInit, OnDestroy {
+export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
 
   addToWatchList$ = new Subject<number>()
@@ -86,7 +87,7 @@ export class UnsubscribeManuallyComponent implements OnInit, OnDestroy {
     })
   )
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: AddToWatchListConditionalService) {}
 
   ngOnInit() {
     this.addToWatchList$

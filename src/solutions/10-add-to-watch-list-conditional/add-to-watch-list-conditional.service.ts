@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core'
-import { ApiService } from './api.service'
-import { Paged, PagedApi } from './paged'
 import {
   combineLatest,
   filter,
@@ -11,32 +9,14 @@ import {
   tap,
   throwError
 } from 'rxjs'
-import { authStore } from './auth.service'
 import { select } from '@ngneat/elf'
-
-export type MovieSummaryApi = {
-  adult: boolean
-  backdrop_path: string
-  genre_ids: number[]
-  id: number
-  original_language: string
-  original_title: string
-  overview: string
-  popularity: number
-  poster_path: string
-  release_date: string
-  title: string
-  video: false
-  vote_average: number
-  vote_count: number
-}
-
-export type MovieSummary = {
-  id: number
-  title: string
-  description: string
-  poster?: string
-}
+import { authStore } from '../../app/services/auth.service'
+import { ApiService } from '../../app/services/api.service'
+import { PagedApi, Paged } from '../../app/types/paged.types'
+import {
+  MovieSummary,
+  MovieSummaryApi
+} from '../../app/types/movie-summary.types'
 
 type WatchListRequest = {
   media_type: 'movie' | 'tv'
@@ -52,7 +32,7 @@ type WatchListResponse = {
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
+export class AddToWatchListConditionalService {
   // Triggered after an update to the watch list and used to re-trigger watch list query
   private watchListUpdated$ = new Subject<void>()
 
