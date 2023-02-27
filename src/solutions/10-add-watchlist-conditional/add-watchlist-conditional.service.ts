@@ -18,24 +18,17 @@ import {
   MovieSummaryApi
 } from '../../app/types/movie-summary.types'
 import { AsyncState } from '../../app/types/async-state.types'
-
-type WatchListRequest = {
-  media_type: 'movie' | 'tv'
-  media_id: number
-  watchlist: boolean
-}
-
-type WatchListResponse = {
-  status_code?: string
-  status_message?: string
-}
+import {
+  WatchlistRequestApi,
+  WatchlistResponseApi
+} from '../../app/types/watchlist.types'
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddToWatchListConditionalService {
+export class AddWatchlistConditionalService {
   // Triggered after an update to the watch list and used to re-trigger watch list query
-  private watchListUpdated$ = new Subject<void>()
+  private watchlistUpdated$ = new Subject<void>()
 
   constructor(private api: ApiService) {}
 
@@ -65,7 +58,7 @@ export class AddToWatchListConditionalService {
       return throwError(() => new Error('Requires user id'))
     }
     return this.api
-      .post<WatchListRequest, WatchListResponse>({
+      .post<WatchlistRequestApi, WatchlistResponseApi>({
         url: `account/${userId}/watchlist`,
         body: {
           media_type: 'movie',
@@ -73,14 +66,14 @@ export class AddToWatchListConditionalService {
           watchlist: isAdding
         }
       })
-      .pipe(tap(() => this.watchListUpdated$.next()))
+      .pipe(tap(() => this.watchlistUpdated$.next()))
   }
 
-  getUserWatchList() {
-    // This uses the `this.watchListUpdated$` stream to re-trigger fetch
+  getUserWatchlist() {
+    // This uses the `this.watchlistUpdated$` stream to re-trigger fetch
     return combineLatest([
       authStore.pipe(select(state => state.user?.id)),
-      this.watchListUpdated$.pipe(startWith(null))
+      this.watchlistUpdated$.pipe(startWith(null))
     ]).pipe(
       map(([userId]) => userId),
       filter(Boolean),

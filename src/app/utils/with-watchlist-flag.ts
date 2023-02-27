@@ -13,7 +13,7 @@ export const withWatchlistFlag = (
 ) =>
   moviesList && watchlistIds
     ? moviesList.map<MovieSummary & { onWatchlist?: boolean }>(movie =>
-        watchlistIds.some(watchListMovieId => watchListMovieId === movie.id)
+        watchlistIds.some(watchlistMovieId => watchlistMovieId === movie.id)
           ? { ...movie, onWatchlist: true }
           : movie
       )

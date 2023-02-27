@@ -6,12 +6,12 @@ import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { AddToWatchListConditionalService } from './add-to-watch-list-conditional.service'
-import { withWatchlistFlag } from '../../app/utils/with-watch-list-flag'
+import { AddWatchlistConditionalService } from './add-watchlist-conditional.service'
+import { withWatchlistFlag } from '../../app/utils/with-watchlist-flag'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
-  selector: 'app-add-to-watch-list-conditional',
+  selector: 'app-add-to-watchlist-conditional',
   standalone: true,
   imports: [
     CommonModule,
@@ -50,7 +50,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
                 mat-stroked-button
                 color="primary"
                 *ngIf="!movie.onWatchlist"
-                (click)="addToWatchList(movie.id)"
+                (click)="addToWatchlist(movie.id)"
               >
                 Add to watchlist
               </button>
@@ -58,7 +58,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
                 mat-stroked-button
                 color="warn"
                 *ngIf="movie.onWatchlist"
-                (click)="removeFromWatchList(movie.id)"
+                (click)="removeFromWatchlist(movie.id)"
               >
                 Remove from watchlist
               </button>
@@ -69,7 +69,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     </ng-container>
   `
 })
-export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
+export class AddWatchlistConditionalComponent implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
 
   addToWatchList$ = new Subject<number>()
@@ -77,7 +77,7 @@ export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
 
   movies$ = combineLatest([
     this.moviesService.getPopular(),
-    this.moviesService.getUserWatchList()
+    this.moviesService.getUserWatchlist()
   ]).pipe(
     map(([moviesQuery, watchlistQuery]) => ({
       isLoading: moviesQuery.isLoading || watchlistQuery.isLoading,
@@ -85,7 +85,7 @@ export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
     }))
   )
 
-  constructor(private moviesService: AddToWatchListConditionalService) {}
+  constructor(private moviesService: AddWatchlistConditionalService) {}
 
   ngOnInit() {
     this.addToWatchList$
@@ -106,11 +106,11 @@ export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
     this.onDestroy$.next()
   }
 
-  addToWatchList(id: number) {
+  addToWatchlist(id: number) {
     this.addToWatchList$.next(id)
   }
 
-  removeFromWatchList(id: number) {
+  removeFromWatchlist(id: number) {
     this.removeFromWatchList$.next(id)
   }
 }
