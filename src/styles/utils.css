@@ -19,3 +19,21 @@
   flex-direction: column;
   gap: var(--space-medium);
 }
+
+/**
+ Align items in center vertically and horizontally
+ */
+.centered-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/**
+ Make an element take the full height of the page factoring out the menu and page padding
+ Note: a more ideal solution would be applying min-height to each container in the hierarchy
+ and using flex box to fill the area
+ */
+.height-page {
+  height: calc(100vh - 104px);
+}

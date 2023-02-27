@@ -1,6 +1,6 @@
 import { Route } from '@angular/router'
 import { HomeComponent } from './home/home.component'
-import { UnsubscribeManuallyComponent } from '../solutions/10-unsubscribe-manually/unsubscribe-manually.component'
+import { WatchlistConditionalComponent } from '../solutions/10-watchlist-conditional/watchlist-conditional.component'
 import { AuthApprovedComponent } from './auth/auth-approved.component'
 import { ChallengesComponent } from '../challenges/challenges.component'
 import { SolutionsComponent } from '../solutions/solutions.component'
@@ -12,6 +12,6 @@ export const appRoutes: Route[] = [
   { path: 'solutions', component: SolutionsComponent, pathMatch: 'full' },
   {
     path: 'solutions/10',
-    component: UnsubscribeManuallyComponent
+    component: WatchlistConditionalComponent
   }
 ]
