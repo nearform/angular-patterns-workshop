@@ -28,39 +28,44 @@ import { MovieSummary } from '../../app/types/movie-summary.types'
     MatInputModule
   ],
   template: `
-    <div *ngIf="movies$ | async as movies" class="stack">
-      <mat-card *ngFor="let movie of movies">
-        <mat-card-header>
-          <mat-card-title>{{ movie.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="flex">
-            <img [src]="movie.poster" [alt]="movie.title" />
-            <p>
-              {{ movie.description }}
-            </p>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-stroked-button
-            color="primary"
-            *ngIf="!movie.onWatchList"
-            (click)="addToWatchList(movie.id)"
-          >
-            Add to watchlist
-          </button>
-          <button
-            mat-stroked-button
-            color="warn"
-            *ngIf="movie.onWatchList"
-            (click)="removeFromWatchList(movie.id)"
-          >
-            Remove from watchlist
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+    <ng-container *ngIf="{ isLoading: isLoading$ | async } as context">
+      <div *ngIf="context.isLoading">Loading...</div>
+      <ng-container *ngIf="!context.isLoading">
+        <div *ngIf="movies$ | async as movies" class="stack">
+          <mat-card *ngFor="let movie of movies">
+            <mat-card-header>
+              <mat-card-title>{{ movie.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="flex">
+                <img [src]="movie.poster" [alt]="movie.title" />
+                <p>
+                  {{ movie.description }}
+                </p>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button
+                mat-stroked-button
+                color="primary"
+                *ngIf="!movie.onWatchList"
+                (click)="addToWatchList(movie.id)"
+              >
+                Add to watchlist
+              </button>
+              <button
+                mat-stroked-button
+                color="warn"
+                *ngIf="movie.onWatchList"
+                (click)="removeFromWatchList(movie.id)"
+              >
+                Remove from watchlist
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </ng-container>
+    </ng-container>
   `
 })
 export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
@@ -69,18 +74,36 @@ export class AddToWatchListConditionalComponent implements OnInit, OnDestroy {
   addToWatchList$ = new Subject<number>()
   removeFromWatchList$ = new Subject<number>()
 
-  private popularMovies$ = this.moviesService
-    .getPopular()
-    .pipe(map(data => data.results))
-  private watchList$ = this.moviesService.getUserWatchList().pipe(
-    map(data => data.results),
+  private popularMoviesQuery$ = this.moviesService.getPopular()
+  private watchlistQuery$ = this.moviesService.getUserWatchList()
+
+  // Extract the actual results out of the response for each query
+  private popularMoviesItems$ = this.popularMoviesQuery$.pipe(
+    map(movies => (movies.data ? movies.data.results : []))
+  )
+  private watchlistItems$ = this.watchlistQuery$.pipe(
+    map(watchlist => (watchlist.data ? watchlist.data.results : [])),
     startWith([])
   )
 
-  movies$ = combineLatest([this.popularMovies$, this.watchList$]).pipe(
-    map(([movies, watchList]) => {
+  isLoading$ = combineLatest([
+    this.popularMoviesQuery$,
+    this.watchlistQuery$
+  ]).pipe(
+    map(
+      ([popularMoviesQuery, watchListQuery]) =>
+        popularMoviesQuery.isLoading || watchListQuery.isLoading
+    ),
+    startWith(true)
+  )
+
+  movies$ = combineLatest([
+    this.popularMoviesItems$,
+    this.watchlistItems$
+  ]).pipe(
+    map(([movies, watchlist]) => {
       return movies.map<MovieSummary & { onWatchList?: boolean }>(movie =>
-        watchList.some(watchListMovieId => watchListMovieId === movie.id)
+        watchlist.some(watchListMovieId => watchListMovieId === movie.id)
           ? { ...movie, onWatchList: true }
           : movie
       )

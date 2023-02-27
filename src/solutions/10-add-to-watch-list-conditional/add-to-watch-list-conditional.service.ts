@@ -17,6 +17,7 @@ import {
   MovieSummary,
   MovieSummaryApi
 } from '../../app/types/movie-summary.types'
+import { AsyncState } from '../../app/types/async-state.types'
 
 type WatchListRequest = {
   media_type: 'movie' | 'tv'
@@ -42,18 +43,24 @@ export class AddToWatchListConditionalService {
   getPopular() {
     return this.api
       .get<PagedApi<MovieSummaryApi>>({ url: 'movie/popular' })
-      .pipe<Paged<MovieSummary>>(
-        map(data => ({
-          page: data.page,
-          totalPages: data.total_pages,
-          results: data.results.map(movie => ({
-            id: movie.id,
-            title: movie.title,
-            description: movie.overview,
-            poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
-          })),
-          totalResults: data.total_results
-        }))
+      .pipe(
+        map(
+          (data): AsyncState<Paged<MovieSummary>> => ({
+            isLoading: false,
+            data: {
+              page: data.page,
+              totalPages: data.total_pages,
+              results: data.results.map(movie => ({
+                id: movie.id,
+                title: movie.title,
+                description: movie.overview,
+                poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
+              })),
+              totalResults: data.total_results
+            }
+          })
+        ),
+        startWith<AsyncState<Paged<MovieSummary>>>({ isLoading: true })
       )
   }
 
@@ -87,12 +94,18 @@ export class AddToWatchListConditionalService {
           url: `account/${userId}/watchlist/movies`
         })
       ),
-      map(data => ({
-        page: data.page,
-        totalPages: data.total_pages,
-        results: data.results.map(movie => movie.id),
-        totalResults: data.total_results
-      }))
+      map(
+        (data): AsyncState<Paged<number>> => ({
+          isLoading: false,
+          data: {
+            page: data.page,
+            totalPages: data.total_pages,
+            results: data.results.map(movie => movie.id),
+            totalResults: data.total_results
+          }
+        })
+      ),
+      startWith<AsyncState<Paged<number>>>({ isLoading: true })
     )
   }
 }
