@@ -6,12 +6,12 @@ import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { AddWatchlistConditionalService } from './add-watchlist-conditional.service'
+import { WatchlistConditionalService } from './watchlist-conditional.service'
 import { withWatchlistFlag } from '../../app/utils/with-watchlist-flag'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
-  selector: 'app-add-to-watchlist-conditional',
+  selector: 'app-watchlist-conditional',
   standalone: true,
   imports: [
     CommonModule,
@@ -69,7 +69,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     </ng-container>
   `
 })
-export class AddWatchlistConditionalComponent implements OnInit, OnDestroy {
+export class WatchlistConditionalComponent implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
 
   addToWatchList$ = new Subject<number>()
@@ -85,7 +85,7 @@ export class AddWatchlistConditionalComponent implements OnInit, OnDestroy {
     }))
   )
 
-  constructor(private moviesService: AddWatchlistConditionalService) {}
+  constructor(private moviesService: WatchlistConditionalService) {}
 
   ngOnInit() {
     this.addToWatchList$
