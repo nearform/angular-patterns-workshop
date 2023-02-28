@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import { delay, Subject, takeUntil } from 'rxjs'
 import { Movie02Service } from '../02-create-a-movie-service/movie-02.service'
+
 @Component({
-  selector: 'app-movie-list-03-component',
   standalone: true,
-  imports: [CommonModule],
   template: `<p>Hello world!!!</p>`
 })
 export class MovieList03Component implements OnInit, OnDestroy {

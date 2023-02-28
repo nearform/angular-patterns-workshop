@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button'
 import { delay, Subject, switchMap, takeUntil } from 'rxjs'
 
 @Component({
-  selector: 'app-movie-list-08-component',
   standalone: true,
   imports: [
     CommonModule,

@@ -9,7 +9,6 @@ import { MatInputModule } from '@angular/material/input'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
-  selector: 'app-movie-list-05-component',
   standalone: true,
   imports: [
     CommonModule,

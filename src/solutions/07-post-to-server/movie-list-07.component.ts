@@ -6,7 +6,6 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 
 @Component({
-  selector: 'app-movie-list-07-component',
   standalone: true,
   imports: [
     CommonModule,
