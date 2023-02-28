@@ -1,6 +1,6 @@
 import { Route } from '@angular/router'
 import { HomeComponent } from './home/home.component'
-import { MovieList10Component } from '../solutions/10-watchlist-conditional-button/movie-list-10.component'
+import { MovieList10Component } from '../solutions/10-watchlist-autorefresh/movie-list-10.component'
 import { AuthApprovedComponent } from './auth/auth-approved.component'
 import { ChallengesComponent } from '../challenges/challenges.component'
 import { SolutionsComponent } from '../solutions/solutions.component'

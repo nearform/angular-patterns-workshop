@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { delay, Subject, switchMap, takeUntil } from 'rxjs'
 
 @Component({
-  selector: 'app-movie-list-06-component',
+  selector: 'app-movie-list-08-component',
   standalone: true,
   imports: [
     CommonModule,
@@ -65,10 +65,10 @@ export class MovieList08Component implements OnInit, OnDestroy {
       .pipe(
         // Simulate a slow network response
         delay(10_000),
-        // Due to `takeUntil` below this will never be called if you click the "Add to watchlist" button
-        // and navigate away before the above delay has completed
-        switchMap(id => this.moviesService.postWatchlist(id, true)),
-        takeUntil(this.onDestroy$)
+        takeUntil(this.onDestroy$),
+        // Due to `takeUntil` above, this will never be called if you click the "Add to watchlist" button
+        // and navigate away before the delay has completed
+        switchMap(id => this.moviesService.postWatchlist(id, true))
       )
       .subscribe({
         complete: () => {
