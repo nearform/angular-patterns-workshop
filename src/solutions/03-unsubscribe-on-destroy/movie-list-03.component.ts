@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { Subject, takeUntil } from 'rxjs'
+import { delay, Subject, takeUntil } from 'rxjs'
 import { MovieService } from '../02-create-a-movie-service/movie.service'
 @Component({
   selector: 'app-movie-list-03-component',
@@ -15,9 +15,15 @@ export class MovieList03Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.movieService
       .getPopular()
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(movies => {
-        console.log(movies)
+      .pipe(
+        // Add a false delay to simulate a very slow network connection
+        delay(10_000),
+        // We close this stream early if the component is destroyed
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe({
+        next: data => console.log(data),
+        complete: () => console.log('complete')
       })
   }
 
