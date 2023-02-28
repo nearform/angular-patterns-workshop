@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { delay, Subject, takeUntil } from 'rxjs'
-import { Movie02Service } from '../02-create-a-movie-service/movie-02.service'
+import { Movie03Service } from './movie-03.service'
 
 @Component({
   standalone: true,
@@ -8,7 +8,7 @@ import { Movie02Service } from '../02-create-a-movie-service/movie-02.service'
 })
 export class MovieList03Component implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
-  constructor(private movieService: Movie02Service) {}
+  constructor(private movieService: Movie03Service) {}
 
   ngOnInit() {
     this.movieService
