@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
-import { BehaviorSubject, EMPTY, map, switchMap, tap } from 'rxjs'
+import { createStore, withProps } from '@ngneat/elf'
+import { EMPTY, map, switchMap, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { AccessTokenService } from './access-token.service'
-import { combineLatest } from 'rxjs'
 
 type UserAvatarApi = {
   gravatar: {
@@ -29,9 +28,10 @@ export type User = {
   username: string
 }
 
-type AuthState = {
+type AuthProps = {
   user: User | null
   requestToken: string | null
+  accessToken: string | null
 }
 
 type RequestTokenResponse = {
@@ -56,36 +56,34 @@ type DeleteAccessTokenResponse = {
 }
 
 const LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY = 'auth_request_token'
+const LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY = 'auth_request_token'
 
-const defaultState: AuthState = {
+const defaultState: AuthProps = {
   user: null,
-  requestToken: null
+  requestToken: null,
+  accessToken: null
 }
+
+export const authStore = createStore(
+  {
+    name: 'auth'
+  },
+  withProps<AuthProps>({
+    ...defaultState,
+    requestToken: localStorage.getItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY),
+    accessToken: localStorage.getItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY)
+  })
+)
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private _state$ = new BehaviorSubject<AuthState>({
-    ...defaultState,
-    requestToken: localStorage.getItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-  })
+  state$ = authStore.asObservable()
 
-  state$ = this._state$.asObservable()
+  loggedOut$ = this.state$.pipe(map(state => !state.user && !state.accessToken))
 
-  loggedOut$ = combineLatest([
-    this._state$,
-    this.accessTokenService.state$
-  ]).pipe(map(([state, accessToken]) => !state.user && !accessToken))
-
-  constructor(
-    private api: ApiService,
-    private accessTokenService: AccessTokenService
-  ) {}
-
-  currentUser() {
-    return this._state$.getValue().user
-  }
+  constructor(private api: ApiService) {}
 
   requestAuthenticationRedirect() {
     const redirectTo = `${location.protocol}//${location.hostname}:${location.port}/auth/approved`
@@ -103,11 +101,10 @@ export class AuthService {
       })
       .pipe(
         tap(response => {
-          this._state$.next({
-            ...this._state$.getValue(),
+          authStore.update(state => ({
+            ...state,
             requestToken: response.request_token
-          })
-
+          }))
           localStorage.setItem(
             LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY,
             response.request_token
@@ -124,18 +121,18 @@ export class AuthService {
     return this.api.get<UserApi>({ url: `account` }).pipe(
       tap({
         next: userRaw => {
-          this._state$.next({
-            ...this._state$.getValue(),
+          authStore.update(state => ({
+            ...state,
             user: {
               id: userRaw.id,
               username: userRaw.username
             }
-          })
+          }))
         },
         error: () => {
-          this._state$.next({ ...this._state$.getValue(), user: null })
+          authStore.update(state => ({ ...state, user: null }))
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-          this.accessTokenService.removeToken()
+          localStorage.removeItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY)
         }
       })
     )
@@ -147,21 +144,25 @@ export class AuthService {
       .post<{ request_token: string }, AccessTokenResponse>({
         url: 'auth/access_token',
         version: 4,
-        body: { request_token: this._state$.getValue().requestToken! },
+        body: { request_token: authStore.getValue().requestToken! },
         headers: {
           Authorization: `Bearer ${environment.readonlyAccessToken}`
         }
       })
       .pipe(
         tap(({ access_token }) => {
-          this.accessTokenService.setToken(access_token)
+          authStore.update(state => ({
+            ...state,
+            accessToken: access_token
+          }))
+          localStorage.setItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY, access_token)
         }),
         switchMap(() => this.fetchUser())
       )
   }
 
   restoreSession() {
-    if (this.accessTokenService.getToken()) {
+    if (authStore.getValue().accessToken) {
       return this.fetchUser()
     } else {
       return EMPTY
@@ -169,7 +170,7 @@ export class AuthService {
   }
 
   signOut() {
-    const accessToken = this.accessTokenService.getToken()
+    const accessToken = authStore.getValue().accessToken
     if (!accessToken) {
       return EMPTY
     }
@@ -185,9 +186,9 @@ export class AuthService {
       })
       .pipe(
         tap(() => {
-          this._state$.next(defaultState)
+          authStore.update(() => defaultState)
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-          this.accessTokenService.removeToken()
+          localStorage.removeItem(LOCALSTORAGE_AUTH_ACCESS_TOKEN_KEY)
         })
       )
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { map, startWith, throwError } from 'rxjs'
-import { AuthService } from '../../app/services/auth.service'
+import { authStore } from '../../app/services/auth.service'
 import { ApiService } from '../../app/services/api.service'
 import { PagedApi } from '../../app/types/paged.types'
 import {
@@ -17,7 +17,7 @@ import {
   providedIn: 'root'
 })
 export class Movie07Service {
-  constructor(private api: ApiService, private authService: AuthService) {}
+  constructor(private api: ApiService) {}
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopular() {
@@ -41,7 +41,7 @@ export class Movie07Service {
 
   // See https://developers.themoviedb.org/3/account/add-to-watchlist
   postWatchlist(movieId: number, isAdding: boolean) {
-    const userId = this.authService.currentUser()?.id
+    const userId = authStore.getValue().user?.id
     if (!userId) {
       // `throwError` is the mechanism that rxjs provides to indicate an error
       return throwError(() => new Error('Requires user id'))
