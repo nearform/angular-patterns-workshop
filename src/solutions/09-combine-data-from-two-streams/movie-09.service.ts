@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core'
-import { filter, map, startWith, switchMap, throwError } from 'rxjs'
-import { select } from '@ngneat/elf'
-import { authStore } from '../../app/services/auth.service'
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  startWith,
+  switchMap,
+  throwError
+} from 'rxjs'
+import { AuthService } from '../../app/services/auth.service'
 import { ApiService } from '../../app/services/api.service'
 import { PagedApi } from '../../app/types/paged.types'
 import {
@@ -18,7 +24,7 @@ import {
   providedIn: 'root'
 })
 export class Movie09Service {
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private authService: AuthService) {}
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopular() {
@@ -42,7 +48,7 @@ export class Movie09Service {
 
   // See https://developers.themoviedb.org/3/account/add-to-watchlist
   postWatchlist(movieId: number, isAdding: boolean) {
-    const userId = authStore.getValue().user?.id
+    const userId = this.authService.currentUser()?.id
     if (!userId) {
       return throwError(() => new Error('Requires user id'))
     }
@@ -58,7 +64,9 @@ export class Movie09Service {
 
   // See https://developers.themoviedb.org/3/account/get-movie-watchlist
   getUserWatchlist() {
-    return authStore.pipe(select(state => state.user?.id)).pipe(
+    return this.authService.state$.pipe(
+      map(state => state.user?.id),
+      distinctUntilChanged(),
       filter(Boolean),
       switchMap(userId =>
         this.api.get<PagedApi<MovieSummaryApi>>({
