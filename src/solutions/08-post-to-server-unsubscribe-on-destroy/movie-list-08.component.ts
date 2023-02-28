@@ -1,9 +1,10 @@
-import { Component } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MovieService } from './movie.service'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
+import { delay, Subject, switchMap, takeUntil } from 'rxjs'
 
 @Component({
   selector: 'app-movie-list-06-component',
@@ -52,12 +53,36 @@ import { MatButtonModule } from '@angular/material/button'
     </ng-container>
   `
 })
-export class MovieList07Component {
+export class MovieList08Component implements OnInit, OnDestroy {
+  private onDestroy$ = new Subject<void>()
+  private addToWatchList$ = new Subject<number>()
   movies$ = this.moviesService.getPopular()
 
   constructor(private moviesService: MovieService) {}
 
+  ngOnInit() {
+    this.addToWatchList$
+      .pipe(
+        // Simulate a slow network response
+        delay(10_000),
+        // Due to `takeUntil` below this will never be called if you click the "Add to watchlist" button
+        // and navigate away before the above delay has completed
+        switchMap(id => this.moviesService.postWatchlist(id, true)),
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe({
+        complete: () => {
+          // Check that this fires on navigating away
+          console.log('complete')
+        }
+      })
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next()
+  }
+
   addToWatchlist(id: number) {
-    this.moviesService.postWatchlist(id, true).subscribe()
+    this.addToWatchList$.next(id)
   }
 }

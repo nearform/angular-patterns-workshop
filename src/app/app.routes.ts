@@ -11,7 +11,7 @@ import { MovieList04Component } from '../solutions/04-render-a-list/movie-list-0
 import { MovieList05Component } from '../solutions/05-add-an-image/movie-list-05.component'
 import { MovieList06Component } from '../solutions/06-implement-loading-states/movie-list-06.component'
 import { MovieList07Component } from '../solutions/07-post-to-server/movie-list-07.component'
-import { MovieList08Component } from '../solutions/08-call-post-service-from-ui/movie-list-08.component'
+import { MovieList08Component } from '../solutions/08-post-to-server-unsubscribe-on-destroy/movie-list-08.component'
 import { MovieList09Component } from '../solutions/09-combine-data-from-two-streams/movie-list-09.component'
 
 export const appRoutes: Route[] = [
