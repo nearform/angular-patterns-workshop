@@ -1,14 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-  combineLatest,
-  filter,
-  map,
-  startWith,
-  Subject,
-  switchMap,
-  tap,
-  throwError
-} from 'rxjs'
+import { filter, map, startWith, switchMap, throwError } from 'rxjs'
 import { select } from '@ngneat/elf'
 import { authStore } from '../../app/services/auth.service'
 import { ApiService } from '../../app/services/api.service'
@@ -26,10 +17,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class WatchlistConditionalService {
-  // Triggered after an update to the watch list and used to re-trigger watch list query
-  private watchlistUpdated$ = new Subject<void>()
-
+export class Movie09Service {
   constructor(private api: ApiService) {}
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
@@ -52,30 +40,25 @@ export class WatchlistConditionalService {
       )
   }
 
+  // See https://developers.themoviedb.org/3/account/add-to-watchlist
   postWatchlist(movieId: number, isAdding: boolean) {
     const userId = authStore.getValue().user?.id
     if (!userId) {
       return throwError(() => new Error('Requires user id'))
     }
-    return this.api
-      .post<WatchlistRequestApi, WatchlistResponseApi>({
-        url: `account/${userId}/watchlist`,
-        body: {
-          media_type: 'movie',
-          media_id: movieId,
-          watchlist: isAdding
-        }
-      })
-      .pipe(tap(() => this.watchlistUpdated$.next()))
+    return this.api.post<WatchlistRequestApi, WatchlistResponseApi>({
+      url: `account/${userId}/watchlist`,
+      body: {
+        media_type: 'movie',
+        media_id: movieId,
+        watchlist: isAdding
+      }
+    })
   }
 
+  // See https://developers.themoviedb.org/3/account/get-movie-watchlist
   getUserWatchlist() {
-    // This uses the `this.watchlistUpdated$` stream to re-trigger fetch
-    return combineLatest([
-      authStore.pipe(select(state => state.user?.id)),
-      this.watchlistUpdated$.pipe(startWith(null))
-    ]).pipe(
-      map(([userId]) => userId),
+    return authStore.pipe(select(state => state.user?.id)).pipe(
       filter(Boolean),
       switchMap(userId =>
         this.api.get<PagedApi<MovieSummaryApi>>({
