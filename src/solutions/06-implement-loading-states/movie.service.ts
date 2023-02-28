@@ -4,7 +4,7 @@ import {
   MovieSummary,
   MovieSummaryApi
 } from '../../app/types/movie-summary.types'
-import { map, startWith } from 'rxjs'
+import { delay, map, startWith } from 'rxjs'
 import { AsyncState } from '../../app/types/async-state.types'
 import { ApiService } from '../../app/services/api.service'
 import { tmdbPosterThumbnailUrl } from '../../app/utils/tmdb-poster-thumbnail-url'
@@ -30,6 +30,9 @@ export class MovieService {
             }))
           })
         ),
+        // Simulate a slow network
+        delay(5_000),
+        // Set the initial state to loading
         startWith<AsyncState<MovieSummary[]>>({ isLoading: true })
       )
   }

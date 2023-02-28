@@ -5,7 +5,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 
-// TODO: doesn't seem to show spinner even when on slow network
 @Component({
   selector: 'app-movie-list-06-component',
   standalone: true,
