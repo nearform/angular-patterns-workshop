@@ -10,9 +10,10 @@ import { ApiService } from '../../app/services/api.service'
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
+export class Movie04Service {
   constructor(private api: ApiService) {}
 
+  // See https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopular() {
     return this.api
       .get<PagedApi<MovieSummaryApi>>({ url: 'movie/popular' })

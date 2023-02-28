@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core'
-import { map, startWith, throwError } from 'rxjs'
+import {
+  combineLatest,
+  filter,
+  map,
+  startWith,
+  Subject,
+  switchMap,
+  tap,
+  throwError
+} from 'rxjs'
+import { select } from '@ngneat/elf'
 import { authStore } from '../../app/services/auth.service'
 import { ApiService } from '../../app/services/api.service'
 import { PagedApi } from '../../app/types/paged.types'
@@ -16,7 +26,10 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
+export class Movie10Service {
+  // Triggered after an update to the watch list and used to re-trigger watch list query
+  private watchlistUpdated$ = new Subject<void>()
+
   constructor(private api: ApiService) {}
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
@@ -43,16 +56,41 @@ export class MovieService {
   postWatchlist(movieId: number, isAdding: boolean) {
     const userId = authStore.getValue().user?.id
     if (!userId) {
-      // `throwError` is the mechanism that rxjs provides to indicate an error
       return throwError(() => new Error('Requires user id'))
     }
-    return this.api.post<WatchlistRequestApi, WatchlistResponseApi>({
-      url: `account/${userId}/watchlist`,
-      body: {
-        media_type: 'movie',
-        media_id: movieId,
-        watchlist: isAdding
-      }
-    })
+    return this.api
+      .post<WatchlistRequestApi, WatchlistResponseApi>({
+        url: `account/${userId}/watchlist`,
+        body: {
+          media_type: 'movie',
+          media_id: movieId,
+          watchlist: isAdding
+        }
+      })
+      .pipe(tap(() => this.watchlistUpdated$.next()))
+  }
+
+  // See https://developers.themoviedb.org/3/account/get-movie-watchlist
+  getUserWatchlist() {
+    // This uses the `this.watchlistUpdated$` stream to re-trigger fetch
+    return combineLatest([
+      authStore.pipe(select(state => state.user?.id)),
+      this.watchlistUpdated$.pipe(startWith(null))
+    ]).pipe(
+      map(([userId]) => userId),
+      filter(Boolean),
+      switchMap(userId =>
+        this.api.get<PagedApi<MovieSummaryApi>>({
+          url: `account/${userId}/watchlist/movies`
+        })
+      ),
+      map(
+        (data): AsyncState<number[]> => ({
+          isLoading: false,
+          data: data.results.map(movie => movie.id)
+        })
+      ),
+      startWith<AsyncState<number[]>>({ isLoading: true })
+    )
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MovieService } from './movie.service'
+import { Movie05Service } from './movie-05.service'
 import { MatListModule } from '@angular/material/list'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
@@ -41,5 +41,5 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 export class MovieList05Component {
   movies$ = this.moviesService.getPopular()
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: Movie05Service) {}
 }

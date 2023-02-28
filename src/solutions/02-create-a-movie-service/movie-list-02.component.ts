@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MovieService } from './movie.service'
+import { Movie02Service } from './movie-02.service'
 
 @Component({
   selector: 'app-movie-list-02-component',
@@ -9,7 +9,7 @@ import { MovieService } from './movie.service'
   template: `<p>Hello world!!!</p>`
 })
 export class MovieList02Component implements OnInit {
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: Movie02Service) {}
 
   ngOnInit() {
     this.movieService.getPopular().subscribe(movies => {

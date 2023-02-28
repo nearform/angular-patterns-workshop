@@ -6,7 +6,7 @@ import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { MovieService } from './movie.service'
+import { Movie10Service } from './movie-10.service'
 import { withWatchlistFlag } from '../../app/utils/with-watchlist-flag'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
@@ -85,7 +85,7 @@ export class MovieList10Component implements OnInit, OnDestroy {
     }))
   )
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: Movie10Service) {}
 
   ngOnInit() {
     this.addToWatchList$

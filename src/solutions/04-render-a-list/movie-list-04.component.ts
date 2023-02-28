@@ -5,7 +5,7 @@ import { MatSliderModule } from '@angular/material/slider'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { MovieService } from './movie.service'
+import { Movie04Service } from './movie-04.service'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
@@ -38,5 +38,5 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 export class MovieList04Component {
   movies$ = this.moviesService.getPopular()
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: Movie04Service) {}
 }

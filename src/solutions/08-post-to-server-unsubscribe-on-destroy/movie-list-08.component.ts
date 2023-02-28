@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MovieService } from './movie.service'
+import { Movie08Service } from './movie-08.service'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
@@ -58,7 +58,7 @@ export class MovieList08Component implements OnInit, OnDestroy {
   private addToWatchList$ = new Subject<number>()
   movies$ = this.moviesService.getPopular()
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: Movie08Service) {}
 
   ngOnInit() {
     this.addToWatchList$

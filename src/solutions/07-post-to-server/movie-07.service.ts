@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
-import { filter, map, startWith, switchMap, throwError } from 'rxjs'
-import { select } from '@ngneat/elf'
+import { map, startWith, throwError } from 'rxjs'
 import { authStore } from '../../app/services/auth.service'
 import { ApiService } from '../../app/services/api.service'
 import { PagedApi } from '../../app/types/paged.types'
@@ -17,7 +16,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
+export class Movie07Service {
   constructor(private api: ApiService) {}
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
@@ -40,9 +39,11 @@ export class MovieService {
       )
   }
 
+  // See https://developers.themoviedb.org/3/account/add-to-watchlist
   postWatchlist(movieId: number, isAdding: boolean) {
     const userId = authStore.getValue().user?.id
     if (!userId) {
+      // `throwError` is the mechanism that rxjs provides to indicate an error
       return throwError(() => new Error('Requires user id'))
     }
     return this.api.post<WatchlistRequestApi, WatchlistResponseApi>({
@@ -53,23 +54,5 @@ export class MovieService {
         watchlist: isAdding
       }
     })
-  }
-
-  getUserWatchlist() {
-    return authStore.pipe(select(state => state.user?.id)).pipe(
-      filter(Boolean),
-      switchMap(userId =>
-        this.api.get<PagedApi<MovieSummaryApi>>({
-          url: `account/${userId}/watchlist/movies`
-        })
-      ),
-      map(
-        (data): AsyncState<number[]> => ({
-          isLoading: false,
-          data: data.results.map(movie => movie.id)
-        })
-      ),
-      startWith<AsyncState<number[]>>({ isLoading: true })
-    )
   }
 }

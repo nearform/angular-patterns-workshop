@@ -12,9 +12,10 @@ import { tmdbPosterThumbnailUrl } from '../../app/utils/tmdb-poster-thumbnail-ur
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
+export class Movie06Service {
   constructor(private api: ApiService) {}
 
+  // See https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopular() {
     return this.api
       .get<PagedApi<MovieSummaryApi>>({ url: 'movie/popular' })

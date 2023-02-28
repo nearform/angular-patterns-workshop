@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MovieService } from './movie.service'
+import { Movie07Service } from './movie-07.service'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
@@ -55,7 +55,7 @@ import { MatButtonModule } from '@angular/material/button'
 export class MovieList07Component {
   movies$ = this.moviesService.getPopular()
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: Movie07Service) {}
 
   addToWatchlist(id: number) {
     this.moviesService.postWatchlist(id, true).subscribe()

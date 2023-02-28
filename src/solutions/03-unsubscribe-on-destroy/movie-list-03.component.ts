@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { delay, Subject, takeUntil } from 'rxjs'
-import { MovieService } from '../02-create-a-movie-service/movie.service'
+import { Movie02Service } from '../02-create-a-movie-service/movie-02.service'
 @Component({
   selector: 'app-movie-list-03-component',
   standalone: true,
@@ -10,7 +10,7 @@ import { MovieService } from '../02-create-a-movie-service/movie.service'
 })
 export class MovieList03Component implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: Movie02Service) {}
 
   ngOnInit() {
     this.movieService
