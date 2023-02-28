@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
+import { authStore } from './auth.service'
+import { select } from '@ngneat/elf'
 import { switchMap } from 'rxjs'
-import { AccessTokenService } from './access-token.service'
 
 export type ApiVersion = 3 | 4
 
@@ -21,12 +22,9 @@ export type RequestOptions = {
 })
 export class ApiService {
   headers: Record<string, string | string[]>
-  accessToken$ = this.accessTokenService.state$
+  accessToken$ = authStore.pipe(select(state => state.accessToken))
 
-  constructor(
-    private http: HttpClient,
-    private accessTokenService: AccessTokenService
-  ) {
+  constructor(private http: HttpClient) {
     this.headers = {
       'Content-Type': 'application/json;charset=utf-8'
     }
