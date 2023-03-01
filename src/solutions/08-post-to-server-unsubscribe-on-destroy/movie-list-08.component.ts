@@ -5,6 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { delay, Subject, switchMap, takeUntil } from 'rxjs'
+import { MovieSummaryCard08Component } from './movie-summary-card-08.component'
 
 @Component({
   selector: 'app-solution-08',
@@ -13,7 +14,8 @@ import { delay, Subject, switchMap, takeUntil } from 'rxjs'
     CommonModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MovieSummaryCard08Component
   ],
   template: `
     <ng-container *ngIf="movies$ | async as movies">
@@ -26,28 +28,12 @@ import { delay, Subject, switchMap, takeUntil } from 'rxjs'
       </div>
       <ng-container *ngIf="!movies.isLoading">
         <div class="stack">
-          <mat-card *ngFor="let movie of movies.data">
-            <mat-card-header>
-              <mat-card-title>{{ movie.title }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="flex">
-                <img [src]="movie.poster" [alt]="movie.title" />
-                <p>
-                  {{ movie.description }}
-                </p>
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button
-                mat-stroked-button
-                color="primary"
-                (click)="addToWatchlist(movie.id)"
-              >
-                Add to watchlist
-              </button>
-            </mat-card-actions>
-          </mat-card>
+          <app-movie-summary-card
+            *ngFor="let movie of movies.data"
+            [movie]="movie"
+            (addToWatchList)="addToWatchlist$.next($event)"
+          >
+          </app-movie-summary-card>
         </div>
       </ng-container>
     </ng-container>
@@ -55,13 +41,13 @@ import { delay, Subject, switchMap, takeUntil } from 'rxjs'
 })
 export class MovieList08Component implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<void>()
-  private addToWatchList$ = new Subject<number>()
+  addToWatchlist$ = new Subject<number>()
   movies$ = this.moviesService.getPopular()
 
   constructor(private moviesService: Movie08Service) {}
 
   ngOnInit() {
-    this.addToWatchList$
+    this.addToWatchlist$
       .pipe(
         // Simulate a slow network response
         delay(10_000),
@@ -80,9 +66,5 @@ export class MovieList08Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onDestroy$.next()
-  }
-
-  addToWatchlist(id: number) {
-    this.addToWatchList$.next(id)
   }
 }
