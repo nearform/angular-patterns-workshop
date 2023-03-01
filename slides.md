@@ -43,7 +43,7 @@ src: ./slides/service.md
 ---
 
 ---
-src: ./slides/subscribe.md
+src: ./slides/unsubscribe.md
 ---
 
 ---
@@ -51,31 +51,23 @@ src: ./slides/movie-list.md
 ---
 
 ---
-src: ./slides/async-pipe.md
----
-
----
 src: ./slides/image.md
 ---
 
-# Step 7: Improve the performance of the image by using ng optimized image
-
+---
+src: ./slides/loading.md
 ---
 
-# Step 8: Create an action in Angular
-
-Rate a movie
-
+---
+src: ./slides/watchlist.md
 ---
 
-# Step 9: Calling this action from the component
-
-Call this service from an Angular component
-
+---
+src: ./slides/combine-data.md
 ---
 
-# Step 10: Unsubscribe from an observable when a component is destroyed
-
+---
+src: ./slides/auto-refresh.md
 ---
 
 <div class="slidev-layout intro">
