@@ -2,8 +2,8 @@
 
 <div class="dense">
 
-- This workshop is made of multiple, incremental steps
-- It's built using of [Nx](https://nx.dev), a build system that works very well with Angular
+- This workshop is made up of multiple, incremental steps
+- It's built using [Nx](https://nx.dev), an open source build system inspired by the Angular CLI
 - At each step you are asked to add features and solve problems
 - The `src/challenges` folder is where you should write your code
 - The `src/solutions` folder contains the solutions to the challenges
