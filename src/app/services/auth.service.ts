@@ -142,7 +142,6 @@ export class AuthService {
   }
 
   completeSignIn() {
-    // TODO An extra (but cancelled) call is being made here for some reason
     return this.api
       .post<{ request_token: string }, AccessTokenResponse>({
         url: 'auth/access_token',
@@ -186,7 +185,6 @@ export class AuthService {
       })
       .pipe(
         tap(() => {
-          console.log('sign out')
           this._state$.next(defaultState)
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
           this.accessTokenService.removeToken()

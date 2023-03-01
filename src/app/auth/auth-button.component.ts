@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { map, Subject, switchMap, takeUntil, tap } from 'rxjs'
+import { map, Subject, switchMap, takeUntil } from 'rxjs'
 import { AuthService } from '../services/auth.service'
 import { MatButtonModule } from '@angular/material/button'
 import { Router } from '@angular/router'
@@ -27,7 +27,6 @@ export class AuthButtonComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    console.log('logout')
     this.clickSignOut$.next()
   }
 
@@ -41,9 +40,6 @@ export class AuthButtonComponent implements OnInit, OnDestroy {
 
     this.clickSignOut$
       .pipe(
-        tap(() => {
-          console.log('sign out 1')
-        }),
         switchMap(() => this.authService.signOut()),
         takeUntil(this.onDestroy$)
       )
