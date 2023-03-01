@@ -88,7 +88,7 @@ export class AuthService {
   }
 
   requestAuthenticationRedirect() {
-    const redirectTo = `${location.protocol}//${location.hostname}:${location.port}/auth/approved`
+    const redirectTo = `${window.location.origin}/auth/approved`
 
     return this.api
       .post<{ redirect_to: string }, RequestTokenResponse>({
