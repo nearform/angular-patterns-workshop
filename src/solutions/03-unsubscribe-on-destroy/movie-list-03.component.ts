@@ -3,6 +3,7 @@ import { delay, Subject, takeUntil } from 'rxjs'
 import { Movie03Service } from './movie-03.service'
 
 @Component({
+  selector: 'app-solution-03',
   standalone: true,
   template: `<p>Hello world!!!</p>`
 })

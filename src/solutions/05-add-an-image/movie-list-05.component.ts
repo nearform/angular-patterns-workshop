@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
+  selector: 'app-solution-05',
   standalone: true,
   imports: [
     CommonModule,
