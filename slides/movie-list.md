@@ -16,8 +16,12 @@
 
 <div class="dense">
 
-- Render a basic list of popular movies based on the response from tmdb
-- 💡 To make it look nicer you should consider using the [material card](https://material.angular.io/components/card/overview) which is installed and ready to use
+- Render a list of popular movies based on the response from **tmdb** which you have prepared in previous steps
+- Include both the **title** and **overview** fields in the rendered output
+- You will need to use `*ngIf` to ensure the movies stream is ready along with the `async` pipe to prepare the movies list for use in the template
+- `*ngFor` will be required to loop through each of the movies in the list
+- Finally, you will need to use interpolation syntax (`{{item.value}}`) to render the values from each of the movies
+- 💡 Consider using [material card](https://material.angular.io/components/card/overview) to improve the appearance (which is installed and ready to use)
 - 💡 To add a little space in the list try adding the `stack` class to the list container
 
 </div>
