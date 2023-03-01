@@ -18,98 +18,56 @@ lineNumbers: false
 </div>
 
 ---
-
-# Workshop structure
-
-<div class="dense">
-
-- This workshop is made of multiple, incremental steps
-- It's built using of [Nx](https://nx.dev), a build system that works very well with Angular
-- At each step you are asked to add features and solve problems
-- The `src/challenges` folder is where you should write your code
-- The `src/solutions` folder contains the solutions to the challenges
-- The 💡 icon indicates hints
-
-</div>
-
+src: ./slides/structure.md
 ---
 
-# Viewing the solutions
-
-<div class="dense">
-
-- Read the code in the `src/solutions/step-{n}-{name}` folder
-- Visit the solution pages at `http://localhost:4200/solutions/step-{n}-{name}`
-- If you are running on CodeSandbox, replace `http://localhost:4200` with the url of your sandbox
-
-</div>
-
+---
+src: ./slides/solutions.md
 ---
 
-<div class="slidev-layout intro">
-
-# Let's get started! 🚀
-
-</div>
-
+---
+src: ./slides/get-started.md
 ---
 
-# Step 0: Useful rxjs hints and tips 
-
-Provide a comprehensive list of rx snippets that will be needed throughout the code to avoid blocking participants.
 
 ---
-
-# Step 1: Write an Angular component
-
-Will provide the command line generate function: `nx g @nrwl/angular:component my-component`
-
+src: ./slides/rxjs.md
 ---
 
-# Step 2: Write an Angular service that calls a backend API
-
-Will call TMDB popular movies endpoint with Angular http
-
+---
+src: ./slides/component.md
 ---
 
-# Step 3: Subscribe to the service you created in the previous step
-
-Will just get dev to console log the result in the component
-
+---
+src: ./slides/service.md
 ---
 
-# Step 4: Output a list of movies
-
-Perhaps suggesting using some Material Ui components to make it look a little nicer
-
+---
+src: ./slides/unsubscribe.md
 ---
 
-# Step 5: Add auto unsubscription by using Angular `async` pipe
-
+---
+src: ./slides/movie-list.md
 ---
 
-# Step 6: Add a poster image
-
+---
+src: ./slides/image.md
 ---
 
-# Step 7: Improve the performance of the image by using ng optimized image
-
+---
+src: ./slides/loading.md
 ---
 
-# Step 8: Create an action in Angular
-
-Rate a movie
-
+---
+src: ./slides/watchlist.md
 ---
 
-# Step 9: Calling this action from the component
-
-Call this service from an Angular component
-
+---
+src: ./slides/combine-data.md
 ---
 
-# Step 10: Unsubscribe from an observable when a component is destroyed
-
+---
+src: ./slides/auto-refresh.md
 ---
 
 <div class="slidev-layout intro">
