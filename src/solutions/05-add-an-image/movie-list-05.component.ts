@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MovieSummaryCard05Component } from './movie-summary-card-05.component'
 
 @Component({
   selector: 'app-solution-05',
@@ -18,23 +19,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     MatCardModule,
     MatButtonModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MovieSummaryCard05Component
   ],
   template: `
     <div *ngIf="movies$ | async as movies" class="stack">
-      <mat-card *ngFor="let movie of movies">
-        <mat-card-header>
-          <mat-card-title>{{ movie.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="flex">
-            <img [src]="movie.poster" [alt]="movie.title" />
-            <p>
-              {{ movie.description }}
-            </p>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <app-movie-summary-card
+        *ngFor="let movie of movies"
+        [movie]="movie"
+      ></app-movie-summary-card>
     </div>
   `
 })

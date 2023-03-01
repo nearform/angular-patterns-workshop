@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input'
 import { Movie10Service } from './movie-10.service'
 import { withWatchlistFlag } from '../../app/utils/with-watchlist-flag'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MovieSummaryCard10Component } from './movie-summary-card-10.component'
 
 @Component({
   selector: 'app-solution-10',
@@ -20,7 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     MatCardModule,
     MatButtonModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MovieSummaryCard10Component
   ],
   template: `
     <ng-container *ngIf="movies$ | async as movies">
@@ -33,37 +35,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
       </div>
       <ng-container *ngIf="!movies.isLoading">
         <div *ngIf="movies$ | async as movies" class="stack">
-          <mat-card *ngFor="let movie of movies.data">
-            <mat-card-header>
-              <mat-card-title>{{ movie.title }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="flex">
-                <img [src]="movie.poster" [alt]="movie.title" />
-                <p>
-                  {{ movie.description }}
-                </p>
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button
-                mat-stroked-button
-                color="primary"
-                *ngIf="!movie.onWatchlist"
-                (click)="addToWatchlist(movie.id)"
-              >
-                Add to watchlist
-              </button>
-              <button
-                mat-stroked-button
-                color="warn"
-                *ngIf="movie.onWatchlist"
-                (click)="removeFromWatchlist(movie.id)"
-              >
-                Remove from watchlist
-              </button>
-            </mat-card-actions>
-          </mat-card>
+          <app-movie-summary-card
+            *ngFor="let movie of movies.data"
+            [movie]="movie"
+            (addToWatchlist)="addToWatchlist$.next($event)"
+            (removeFromWatchlist)="removeFromWatchlist$.next($event)"
+          ></app-movie-summary-card>
         </div>
       </ng-container>
     </ng-container>
@@ -72,8 +49,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 export class MovieList10Component implements OnInit, OnDestroy {
   onDestroy$ = new Subject<void>()
 
-  addToWatchList$ = new Subject<number>()
-  removeFromWatchList$ = new Subject<number>()
+  addToWatchlist$ = new Subject<number>()
+  removeFromWatchlist$ = new Subject<number>()
 
   movies$ = combineLatest([
     this.moviesService.getPopular(),
@@ -88,13 +65,13 @@ export class MovieList10Component implements OnInit, OnDestroy {
   constructor(private moviesService: Movie10Service) {}
 
   ngOnInit() {
-    this.addToWatchList$
+    this.addToWatchlist$
       .pipe(
         takeUntil(this.onDestroy$),
         switchMap(movieId => this.moviesService.postWatchlist(movieId, true))
       )
       .subscribe()
-    this.removeFromWatchList$
+    this.removeFromWatchlist$
       .pipe(
         takeUntil(this.onDestroy$),
         switchMap(movieId => this.moviesService.postWatchlist(movieId, false))
@@ -104,13 +81,5 @@ export class MovieList10Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onDestroy$.next()
-  }
-
-  addToWatchlist(id: number) {
-    this.addToWatchList$.next(id)
-  }
-
-  removeFromWatchlist(id: number) {
-    this.removeFromWatchList$.next(id)
   }
 }

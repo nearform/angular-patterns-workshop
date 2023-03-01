@@ -1,4 +1,7 @@
-import { MovieSummary } from '../types/movie-summary.types'
+import {
+  MovieSummary,
+  MovieSummaryWithWatchListFlag
+} from '../types/movie-summary.types'
 
 /**
  * Adds an `onWatchlist` boolean to each movie in the list
@@ -10,11 +13,11 @@ import { MovieSummary } from '../types/movie-summary.types'
 export const withWatchlistFlag = (
   moviesList?: MovieSummary[],
   watchlistIds?: number[]
-) =>
+): MovieSummaryWithWatchListFlag[] =>
   moviesList && watchlistIds
-    ? moviesList.map<MovieSummary & { onWatchlist?: boolean }>(movie =>
+    ? moviesList.map<MovieSummaryWithWatchListFlag>(movie =>
         watchlistIds.some(watchlistMovieId => watchlistMovieId === movie.id)
           ? { ...movie, onWatchlist: true }
-          : movie
+          : { ...movie, onWatchlist: false }
       )
     : []

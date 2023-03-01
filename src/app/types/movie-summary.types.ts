@@ -21,3 +21,7 @@ export type MovieSummary = {
   description: string
   poster?: string
 }
+
+export type MovieSummaryWithWatchListFlag = MovieSummary & {
+  onWatchlist: boolean
+}
