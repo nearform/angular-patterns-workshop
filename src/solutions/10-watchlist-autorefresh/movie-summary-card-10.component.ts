@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatCardModule } from '@angular/material/card'
-import { MovieSummary } from '../../app/types/movie-summary.types'
+import { MovieSummaryWithWatchListFlag } from '../../app/types/movie-summary.types'
 import { MatButtonModule } from '@angular/material/button'
 
 @Component({
@@ -44,7 +44,7 @@ import { MatButtonModule } from '@angular/material/button'
 })
 export class MovieSummaryCard10Component {
   @Input()
-  movie!: MovieSummary & { onWatchlist: boolean }
+  movie!: MovieSummaryWithWatchListFlag
   @Output() addToWatchlist = new EventEmitter<number>()
   @Output() removeFromWatchlist = new EventEmitter<number>()
 }
