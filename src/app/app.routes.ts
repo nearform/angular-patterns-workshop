@@ -2,7 +2,7 @@ import { Route } from '@angular/router'
 import { HomeComponent } from './home/home.component'
 import { MovieList10Component } from '../solutions/10-watchlist-autorefresh/movie-list-10.component'
 import { AuthApprovedComponent } from './auth/auth-approved.component'
-import { ChallengesComponent } from '../challenges/challenges.component'
+import { StartHereComponent } from '../start-here/start-here.component'
 import { SolutionsComponent } from '../solutions/solutions.component'
 import { MovieList01Component } from '../solutions/01-add-your-first-component/movie-list-01.component'
 import { MovieList02Component } from '../solutions/02-create-a-movie-service/movie-list-02.component'
@@ -17,7 +17,7 @@ import { MovieList09Component } from '../solutions/09-combine-data-from-two-stre
 export const appRoutes: Route[] = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'auth/approved', component: AuthApprovedComponent },
-  { path: 'challenges', component: ChallengesComponent, pathMatch: 'full' },
+  { path: 'start-here', component: StartHereComponent, pathMatch: 'full' },
   { path: 'solutions', component: SolutionsComponent, pathMatch: 'full' },
   {
     path: 'solutions/01',

@@ -42,4 +42,4 @@ import { RouterLink } from '@angular/router'
     </mat-list>
   `
 })
-export class ChallengesComponent {}
+export class StartHereComponent {}
