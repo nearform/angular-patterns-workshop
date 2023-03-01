@@ -43,7 +43,15 @@ src: ./slides/service.md
 ---
 
 ---
-src: ./slides/unsubscribe.md
+src: ./slides/step-03/unsubscribe-background.md
+---
+
+---
+src: ./slides/step-03/unsubscribe-exercise.md
+---
+
+---
+src: ./slides/step-03/unsubscribe-trying-it-out.md
 ---
 
 ---
