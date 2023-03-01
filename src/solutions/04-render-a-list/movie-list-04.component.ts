@@ -9,6 +9,7 @@ import { Movie04Service } from './movie-04.service'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
+  selector: 'app-solution-04',
   standalone: true,
   imports: [
     CommonModule,

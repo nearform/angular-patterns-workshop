@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Movie02Service } from './movie-02.service'
 
 @Component({
+  selector: 'app-solution-02',
   standalone: true,
   template: `<p>Hello world!!!</p>`
 })
