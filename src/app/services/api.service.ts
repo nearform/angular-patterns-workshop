@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
-import { switchMap } from 'rxjs'
 import { AccessTokenService } from './access-token.service'
 
 export type ApiVersion = 3 | 4
@@ -21,7 +20,6 @@ export type RequestOptions = {
 })
 export class ApiService {
   headers: Record<string, string | string[]>
-  accessToken$ = this.accessTokenService.state$
 
   constructor(
     private http: HttpClient,
@@ -63,21 +61,18 @@ export class ApiService {
     body: TRequest
     headers?: Record<string, string | string[]>
   }) {
-    return this.accessToken$.pipe(
-      switchMap(accessToken =>
-        this.http.post<TResponse>(this.toUrl({ url, version }), body, {
-          headers: {
-            ...this.headers,
-            ...(accessToken
-              ? {
-                  Authorization: `Bearer ${accessToken}`
-                }
-              : {}),
-            ...headers
-          }
-        })
-      )
-    )
+    const accessToken = this.accessTokenService.getToken()
+    return this.http.post<TResponse>(this.toUrl({ url, version }), body, {
+      headers: {
+        ...this.headers,
+        ...(accessToken
+          ? {
+              Authorization: `Bearer ${accessToken}`
+            }
+          : {}),
+        ...headers
+      }
+    })
   }
 
   put<TRequest, TResponse>({
@@ -89,20 +84,17 @@ export class ApiService {
     version?: ApiVersion
     body: TRequest
   }) {
-    return this.accessToken$.pipe(
-      switchMap(accessToken =>
-        this.http.put<TResponse>(this.toUrl({ url, version }), body, {
-          headers: {
-            ...this.headers,
-            ...(accessToken
-              ? {
-                  Authorization: `Bearer ${accessToken}`
-                }
-              : {})
-          }
-        })
-      )
-    )
+    const accessToken = this.accessTokenService.getToken()
+    return this.http.put<TResponse>(this.toUrl({ url, version }), body, {
+      headers: {
+        ...this.headers,
+        ...(accessToken
+          ? {
+              Authorization: `Bearer ${accessToken}`
+            }
+          : {})
+      }
+    })
   }
 
   delete<TRequest, TResponse>({
@@ -116,21 +108,18 @@ export class ApiService {
     body: TRequest
     headers?: Record<string, string | string[]>
   }) {
-    return this.accessToken$.pipe(
-      switchMap(accessToken =>
-        this.http.delete<TResponse>(this.toUrl({ url, version }), {
-          body,
-          headers: {
-            ...this.headers,
-            ...(accessToken
-              ? {
-                  Authorization: `Bearer ${accessToken}`
-                }
-              : {}),
-            ...headers
-          }
-        })
-      )
-    )
+    const accessToken = this.accessTokenService.getToken()
+    return this.http.delete<TResponse>(this.toUrl({ url, version }), {
+      body,
+      headers: {
+        ...this.headers,
+        ...(accessToken
+          ? {
+              Authorization: `Bearer ${accessToken}`
+            }
+          : {}),
+        ...headers
+      }
+    })
   }
 }

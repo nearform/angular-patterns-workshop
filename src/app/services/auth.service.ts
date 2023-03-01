@@ -173,6 +173,7 @@ export class AuthService {
     if (!accessToken) {
       return EMPTY
     }
+
     // TODO for some reason an extra call to the DELETE endpoint is still being made
     return this.api
       .delete<{ access_token: string }, DeleteAccessTokenResponse>({
@@ -185,6 +186,7 @@ export class AuthService {
       })
       .pipe(
         tap(() => {
+          console.log('sign out')
           this._state$.next(defaultState)
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
           this.accessTokenService.removeToken()
