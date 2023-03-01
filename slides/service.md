@@ -31,11 +31,12 @@ class MovieService {}
 TMDB_ACCESS_TOKEN=....
 ```
 
-- Add the service to the `start-here` folder
-- Inject the provided `ApiClient` into your service constructor and use it to make an HTTP request to `movies/popular`
-- See https://developers.themoviedb.org/3/movies/get-popular-movies for details on the response shape
-- Your service method will return a stream (an `Observable`) to which components and templates can subscribe
-
+- Angular provides a stream based `http` client for making HTTP requests
+- This tutorial provides an `ApiService` that wraps the `http` service and adds authentication headers
+- Inject the `ApiService` into your service constructor and use it to make an HTTP request to `movies/popular`
+- 💡 See the [TMDB API Documentation](https://developers.themoviedb.org/3/movies/get-popular-movies) for details on the response shape
+- Your service method will return a stream to which components and templates can subscribe
+- Use the `pipe` and `map` operators to map the stream values into collection of movie `id`, `title`, and `description`
 
 </div>
 
@@ -45,7 +46,8 @@ TMDB_ACCESS_TOKEN=....
 
 # Step 2: Trying it out
 
-- Inject your service into your Hello World component
-- To test your service response, you can subscribe to your get popular movies method from the component and console log any values from the stream
+- Inject your service into your Hello World component via the constructor
+- To test your service response, you can subscribe to your _get popular movies_ method from the component and `console.log` any values from the stream
+- 💡 You can implement the `OnInit` interface and subscribe to the stream within the component's `ngOnInit` lifecycle event
 
 </div>
