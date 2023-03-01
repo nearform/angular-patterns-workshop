@@ -11,6 +11,7 @@ import { withWatchlistFlag } from '../../app/utils/with-watchlist-flag'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
+  selector: 'app-solution-09',
   standalone: true,
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { delay, Subject, switchMap, takeUntil } from 'rxjs'
 
 @Component({
+  selector: 'app-solution-08',
   standalone: true,
   imports: [
     CommonModule,

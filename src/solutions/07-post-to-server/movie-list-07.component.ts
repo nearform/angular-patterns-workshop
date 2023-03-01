@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 
 @Component({
+  selector: 'app-solution-07',
   standalone: true,
   imports: [
     CommonModule,
