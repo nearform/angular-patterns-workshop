@@ -88,8 +88,6 @@ export class AuthService {
 
     return this.api.get<RequestTokenResponse>('authentication/token/new').pipe(
       tap(response => {
-        console.log({ response })
-
         this._state$.next({
           ...this._state$.getValue(),
           requestToken: response.request_token
