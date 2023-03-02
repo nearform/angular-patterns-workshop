@@ -2,8 +2,20 @@
 <div class="dense">
 
  - Sometimes we need to combine data from two or more observable streams
- - A good example of this is when a page or feature relies on a combination of data from two different endpoints
+ - A good example of this is when a page or feature relies on a combination of data from multiple different endpoints
 
+```mermaid
+flowchart LR
+  stream1[Stream 1]
+  stream2[Stream 2]
+  moreStreams[..more streams]
+  combinationFunction(((Combination function)))
+  combinedStream[Combined stream]
+  stream1 -.-> combinationFunction
+  stream2 -.-> combinationFunction
+  moreStreams -.-> combinationFunction
+  combinationFunction -.-> combinedStream
+```
 </div>
 
 ---
