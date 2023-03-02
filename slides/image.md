@@ -1,15 +1,14 @@
-# Step 5: Sharing data between child and parent components
+# Step 5: Sharing data between parent and child components
 
 <div class="dense">
 
-- A common pattern in Angular for sharing data between parent and child components is to use the `@Input` and `@Output` decorators
+- A common pattern in Angular for sharing data between parent and child components is to use the `@Input` decorator:
 
 </div>
 
 ```mermaid
 flowchart TD
     movie-list(Movie List Component) -->|"@Input() movie"| movie-summary(Movie Summary Component)
-    movie-summary -->|"@Output() onSelect"|movie-list
 ```
 
 ---
@@ -31,35 +30,6 @@ class MyComponent {
 ```html
 <my-component title="title"></my-component>
 <my-component [title]="title"></my-component>
-```
-
-</div>
-
----
-
-# Step 5: Outputs
-
-<div class="dense">
-
-- The `@Output` decorator allows child components to raise events that can be handled within a parent
-- To raise an event, an `@Output()` must have the type of `EventEmitter`
-- This is a generic type that takes the type of the value emitted
-- The child can invoke the `emit` method to publish the value:
-
-```typescript
-export class MyComponent {
-  @Output() onNewItem = new EventEmitter<string>()
-
-  addNewItem(value: string) {
-    this.onNewItem.emit(value)
-  }
-}
-```
-
-- The parent can use [event binding](https://angular.io/guide/event-binding) to handle the event:
-
-```html
-<my-component (onNewItem)="handleNewItem($event)"></my-component>
 ```
 
 </div>
