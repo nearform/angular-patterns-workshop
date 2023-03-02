@@ -16,17 +16,15 @@ export class Movie05Service {
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopular() {
-    return this.api
-      .get<PagedApi<MovieSummaryApi>>({ url: 'movie/popular' })
-      .pipe(
-        map((data): MovieSummary[] =>
-          data.results.map(movie => ({
-            id: movie.id,
-            title: movie.title,
-            description: movie.overview,
-            poster: tmdbPosterThumbnailUrl(movie.poster_path)
-          }))
-        )
+    return this.api.get<PagedApi<MovieSummaryApi>>('movie/popular').pipe(
+      map((data): MovieSummary[] =>
+        data.results.map(movie => ({
+          id: movie.id,
+          title: movie.title,
+          description: movie.overview,
+          poster: tmdbPosterThumbnailUrl(movie.poster_path)
+        }))
       )
+    )
   }
 }
