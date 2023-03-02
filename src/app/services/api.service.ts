@@ -23,11 +23,11 @@ export class ApiService {
   private toUrl(path: string): string {
     const url = new URL(`${API_VERSION}/${path}`, environment.baseUrl)
     const params = new URLSearchParams(url.search)
-    params.append('api_key', environment.apiKey)
+    params.set('api_key', environment.apiKey)
 
     const sessionId = this.accessTokenService.getSessionId()
     if (sessionId) {
-      params.append('session_id', sessionId)
+      params.set('session_id', sessionId)
     }
 
     return `${url.origin}${url.pathname}?${params}`
