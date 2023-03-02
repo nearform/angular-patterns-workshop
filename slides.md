@@ -63,7 +63,7 @@ src: ./slides/flattening-rxjs-streams.md
 ---
 
 ---
-src: ./slides/combine-data.md
+src: ./slides/combining-streams.md
 ---
 
 ---
