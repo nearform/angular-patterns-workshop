@@ -1,4 +1,5 @@
 # Step 3: Unsubscribe to a service on component destroy
+
 <div class="dense">
 
 - **Angular** provides the `OnDestroy` hook to allow running tidy up code when a component is destroyed
@@ -11,7 +12,8 @@
 
 ---
 
-# Step 3: Exercise
+# Step 3: Exercise 💻
+
 <div class="dense">
 
 - Implement the `OnDestroy` life cycle method in the movie list component
@@ -23,10 +25,11 @@
 ---
 
 # Step 3: Trying it out
+
 <div class="dense">
 
 - Introduce a fake delay by adding an **RxJS** `delay` operator into the movie query pipe or use your browser devtools to simulate a slow network environment
 - Add the `next` and `complete` callbacks in the call to `subscribe` with some simple logging (e.g. `console.log('complete called')`)
-- Navigate away from the page *before* the request has completed and notice that the `next` callback is never called and the `complete` callback is immediately called
+- Navigate away from the page _before_ the request has completed and notice that the `next` callback is never called and the `complete` callback is immediately called
 
 </div>
