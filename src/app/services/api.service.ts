@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
-import { AccessTokenService } from './access-token.service'
+import { SessionService } from './session.service'
 
 const API_VERSION = 3
 
@@ -13,7 +13,7 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
-    private accessTokenService: AccessTokenService
+    private accessTokenService: SessionService
   ) {
     this.headers = {
       'Content-Type': 'application/json;charset=utf-8'
@@ -25,7 +25,7 @@ export class ApiService {
     const params = new URLSearchParams(url.search)
     params.append('api_key', environment.apiKey)
 
-    const sessionId = this.accessTokenService.getToken()
+    const sessionId = this.accessTokenService.getSessionId()
     if (sessionId) {
       params.append('session_id', sessionId)
     }

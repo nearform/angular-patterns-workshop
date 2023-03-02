@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
 import { BehaviorSubject, EMPTY, map, switchMap, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { AccessTokenService } from './access-token.service'
+import { SessionService } from './session.service'
 import { combineLatest } from 'rxjs'
 
 type UserAvatarApi = {
@@ -70,14 +70,13 @@ export class AuthService {
 
   state$ = this._state$.asObservable()
 
-  loggedOut$ = combineLatest([
-    this._state$,
-    this.accessTokenService.state$
-  ]).pipe(map(([state, accessToken]) => !state.user && !accessToken))
+  loggedOut$ = combineLatest([this._state$, this.sessionService.state$]).pipe(
+    map(([state, accessToken]) => !state.user && !accessToken)
+  )
 
   constructor(
     private api: ApiService,
-    private accessTokenService: AccessTokenService
+    private sessionService: SessionService
   ) {}
 
   currentUser() {
@@ -123,7 +122,7 @@ export class AuthService {
         error: () => {
           this._state$.next({ ...this._state$.getValue(), user: null })
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-          this.accessTokenService.removeToken()
+          this.sessionService.removeSessionId()
         }
       })
     )
@@ -137,14 +136,14 @@ export class AuthService {
       })
       .pipe(
         tap(({ session_id }) => {
-          this.accessTokenService.setToken(session_id)
+          this.sessionService.setSessionId(session_id)
         }),
         switchMap(() => this.fetchUser())
       )
   }
 
   restoreSession() {
-    if (this.accessTokenService.getToken()) {
+    if (this.sessionService.getSessionId()) {
       return this.fetchUser()
     } else {
       return EMPTY
@@ -152,22 +151,21 @@ export class AuthService {
   }
 
   signOut() {
-    const accessToken = this.accessTokenService.getToken()
-    if (!accessToken) {
+    const sessionId = this.sessionService.getSessionId()
+    if (!sessionId) {
       return EMPTY
     }
 
-    // TODO for some reason an extra call to the DELETE endpoint is still being made
     return this.api
       .delete<{ session_id: string }, DeleteAccessTokenResponse>({
         path: 'authentication/session',
-        body: { session_id: accessToken }
+        body: { session_id: sessionId }
       })
       .pipe(
         tap(() => {
           this._state$.next(defaultState)
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-          this.accessTokenService.removeToken()
+          this.sessionService.removeSessionId()
         })
       )
   }
