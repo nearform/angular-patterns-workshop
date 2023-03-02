@@ -59,10 +59,6 @@ src: ./slides/loading.md
 ---
 
 ---
-src: ./slides/watchlist.md
----
-
----
 src: ./slides/flattening-rxjs-streams.md
 ---
 
