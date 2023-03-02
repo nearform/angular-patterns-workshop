@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { ApiService } from './api.service'
 import { BehaviorSubject, EMPTY, map, switchMap, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { AccessTokenService } from './access-token.service'
+import { SessionService } from './session.service'
 import { combineLatest } from 'rxjs'
 
 type UserAvatarApi = {
@@ -41,12 +41,9 @@ type RequestTokenResponse = {
   status_code: number
 }
 
-type AccessTokenResponse = {
-  account_id: string
-  access_token: string
+type SessionResponse = {
   success: boolean
-  status_message: string
-  status_code: number
+  session_id: string
 }
 
 type DeleteAccessTokenResponse = {
@@ -73,14 +70,13 @@ export class AuthService {
 
   state$ = this._state$.asObservable()
 
-  loggedOut$ = combineLatest([
-    this._state$,
-    this.accessTokenService.state$
-  ]).pipe(map(([state, accessToken]) => !state.user && !accessToken))
+  loggedOut$ = combineLatest([this._state$, this.sessionService.state$]).pipe(
+    map(([state, accessToken]) => !state.user && !accessToken)
+  )
 
   constructor(
     private api: ApiService,
-    private accessTokenService: AccessTokenService
+    private sessionService: SessionService
   ) {}
 
   currentUser() {
@@ -88,40 +84,29 @@ export class AuthService {
   }
 
   requestAuthenticationRedirect() {
-    const redirectTo = `${location.protocol}//${location.hostname}:${location.port}/auth/approved`
+    const redirectTo = `${window.location.origin}/auth/approved`
 
-    return this.api
-      .post<{ redirect_to: string }, RequestTokenResponse>({
-        url: 'auth/request_token',
-        version: 4,
-        body: {
-          redirect_to: redirectTo
-        },
-        headers: {
-          Authorization: `Bearer ${environment.readonlyAccessToken}`
-        }
-      })
-      .pipe(
-        tap(response => {
-          this._state$.next({
-            ...this._state$.getValue(),
-            requestToken: response.request_token
-          })
+    return this.api.get<RequestTokenResponse>('authentication/token/new').pipe(
+      tap(response => {
+        this._state$.next({
+          ...this._state$.getValue(),
+          requestToken: response.request_token
+        })
 
-          localStorage.setItem(
-            LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY,
-            response.request_token
-          )
-        }),
-        map(
-          response =>
-            `${environment.authRedirectUrl}?request_token=${response.request_token}`
+        localStorage.setItem(
+          LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY,
+          response.request_token
         )
+      }),
+      map(
+        response =>
+          `${environment.authRedirectUrl}/${response.request_token}?redirect_to=${redirectTo}`
       )
+    )
   }
 
   private fetchUser() {
-    return this.api.get<UserApi>({ url: `account` }).pipe(
+    return this.api.get<UserApi>('account').pipe(
       tap({
         next: userRaw => {
           this._state$.next({
@@ -135,7 +120,7 @@ export class AuthService {
         error: () => {
           this._state$.next({ ...this._state$.getValue(), user: null })
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-          this.accessTokenService.removeToken()
+          this.sessionService.removeSessionId()
         }
       })
     )
@@ -143,24 +128,20 @@ export class AuthService {
 
   completeSignIn() {
     return this.api
-      .post<{ request_token: string }, AccessTokenResponse>({
-        url: 'auth/access_token',
-        version: 4,
-        body: { request_token: this._state$.getValue().requestToken! },
-        headers: {
-          Authorization: `Bearer ${environment.readonlyAccessToken}`
-        }
+      .post<{ request_token: string }, SessionResponse>({
+        path: 'authentication/session/new',
+        body: { request_token: this._state$.getValue().requestToken! }
       })
       .pipe(
-        tap(({ access_token }) => {
-          this.accessTokenService.setToken(access_token)
+        tap(({ session_id }) => {
+          this.sessionService.setSessionId(session_id)
         }),
         switchMap(() => this.fetchUser())
       )
   }
 
   restoreSession() {
-    if (this.accessTokenService.getToken()) {
+    if (this.sessionService.getSessionId()) {
       return this.fetchUser()
     } else {
       return EMPTY
@@ -168,26 +149,21 @@ export class AuthService {
   }
 
   signOut() {
-    const accessToken = this.accessTokenService.getToken()
-    if (!accessToken) {
+    const sessionId = this.sessionService.getSessionId()
+    if (!sessionId) {
       return EMPTY
     }
 
-    // TODO for some reason an extra call to the DELETE endpoint is still being made
     return this.api
-      .delete<{ access_token: string }, DeleteAccessTokenResponse>({
-        url: 'auth/access_token',
-        version: 4,
-        body: { access_token: accessToken },
-        headers: {
-          Authorization: `Bearer ${environment.readonlyAccessToken}`
-        }
+      .delete<{ session_id: string }, DeleteAccessTokenResponse>({
+        path: 'authentication/session',
+        body: { session_id: sessionId }
       })
       .pipe(
         tap(() => {
           this._state$.next(defaultState)
           localStorage.removeItem(LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY)
-          this.accessTokenService.removeToken()
+          this.sessionService.removeSessionId()
         })
       )
   }
