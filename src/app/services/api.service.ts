@@ -3,17 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import { AccessTokenService } from './access-token.service'
 
-export type ApiVersion = 3 | 4
-
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-
-export type RequestOptions = {
-  method: HttpMethod
-  url: string
-  version?: ApiVersion
-  body?: unknown
-  headers?: Record<string, string | string[]>
-}
+const API_VERSION = 3
 
 @Injectable({
   providedIn: 'root'
@@ -30,96 +20,66 @@ export class ApiService {
     }
   }
 
-  private toUrl({
-    url,
-    version = 3
-  }: {
-    url: string
-    version?: ApiVersion
-  }): string {
-    return `${environment.baseUrl}${version}/${url}`
+  private toUrl(path: string): string {
+    const url = new URL(`${API_VERSION}/${path}`, environment.baseUrl)
+    const params = new URLSearchParams(url.search)
+    params.append('api_key', environment.apiKey)
+
+    const sessionId = this.accessTokenService.getToken()
+    if (sessionId) {
+      params.append('session_id', sessionId)
+    }
+
+    return `${url.origin}${url.pathname}?${params}`
   }
 
   // Use readonly access token for GETs
-  get<TResponse>({ url, version }: { url: string; version?: ApiVersion }) {
-    return this.http.get<TResponse>(this.toUrl({ url, version }), {
-      headers: {
-        ...this.headers,
-        Authorization: `Bearer ${environment.readonlyAccessToken}`
-      }
+  get<TResponse>(path: string) {
+    return this.http.get<TResponse>(this.toUrl(path), {
+      headers: this.headers
     })
   }
 
   post<TRequest, TResponse>({
-    url,
-    version,
+    path,
     body,
     headers = {}
   }: {
-    url: string
-    version?: ApiVersion
+    path: string
     body: TRequest
     headers?: Record<string, string | string[]>
   }) {
-    const accessToken = this.accessTokenService.getToken()
-    return this.http.post<TResponse>(this.toUrl({ url, version }), body, {
-      headers: {
-        ...this.headers,
-        ...(accessToken
-          ? {
-              Authorization: `Bearer ${accessToken}`
-            }
-          : {}),
-        ...headers
-      }
+    return this.http.post<TResponse>(this.toUrl(path), body, {
+      headers: { ...this.headers, ...headers }
     })
   }
 
   put<TRequest, TResponse>({
-    url,
-    version,
-    body
+    path,
+    body,
+    headers = {}
   }: {
-    url: string
-    version?: ApiVersion
+    path: string
     body: TRequest
+    headers?: Record<string, string | string[]>
   }) {
-    const accessToken = this.accessTokenService.getToken()
-    return this.http.put<TResponse>(this.toUrl({ url, version }), body, {
-      headers: {
-        ...this.headers,
-        ...(accessToken
-          ? {
-              Authorization: `Bearer ${accessToken}`
-            }
-          : {})
-      }
+    return this.http.put<TResponse>(this.toUrl(path), body, {
+      headers: { ...this.headers, ...headers }
     })
   }
 
   delete<TRequest, TResponse>({
-    url,
-    version,
+    path,
     body,
     headers = {}
   }: {
-    url: string
-    version?: ApiVersion
+    path: string
     body: TRequest
     headers?: Record<string, string | string[]>
   }) {
-    const accessToken = this.accessTokenService.getToken()
-    return this.http.delete<TResponse>(this.toUrl({ url, version }), {
+    return this.http.delete<TResponse>(this.toUrl(path), {
       body,
-      headers: {
-        ...this.headers,
-        ...(accessToken
-          ? {
-              Authorization: `Bearer ${accessToken}`
-            }
-          : {}),
-        ...headers
-      }
+      headers: { ...this.headers, ...headers }
     })
   }
 }

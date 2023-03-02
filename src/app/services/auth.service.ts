@@ -41,12 +41,9 @@ type RequestTokenResponse = {
   status_code: number
 }
 
-type AccessTokenResponse = {
-  account_id: string
-  access_token: string
+type SessionResponse = {
   success: boolean
-  status_message: string
-  status_code: number
+  session_id: string
 }
 
 type DeleteAccessTokenResponse = {
@@ -90,38 +87,29 @@ export class AuthService {
   requestAuthenticationRedirect() {
     const redirectTo = `${window.location.origin}/auth/approved`
 
-    return this.api
-      .post<{ redirect_to: string }, RequestTokenResponse>({
-        url: 'auth/request_token',
-        version: 4,
-        body: {
-          redirect_to: redirectTo
-        },
-        headers: {
-          Authorization: `Bearer ${environment.readonlyAccessToken}`
-        }
-      })
-      .pipe(
-        tap(response => {
-          this._state$.next({
-            ...this._state$.getValue(),
-            requestToken: response.request_token
-          })
+    return this.api.get<RequestTokenResponse>('authentication/token/new').pipe(
+      tap(response => {
+        console.log({ response })
 
-          localStorage.setItem(
-            LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY,
-            response.request_token
-          )
-        }),
-        map(
-          response =>
-            `${environment.authRedirectUrl}?request_token=${response.request_token}`
+        this._state$.next({
+          ...this._state$.getValue(),
+          requestToken: response.request_token
+        })
+
+        localStorage.setItem(
+          LOCALSTORAGE_AUTH_REQUEST_TOKEN_KEY,
+          response.request_token
         )
+      }),
+      map(
+        response =>
+          `${environment.authRedirectUrl}/${response.request_token}?redirect_to=${redirectTo}`
       )
+    )
   }
 
   private fetchUser() {
-    return this.api.get<UserApi>({ url: `account` }).pipe(
+    return this.api.get<UserApi>('account').pipe(
       tap({
         next: userRaw => {
           this._state$.next({
@@ -143,17 +131,13 @@ export class AuthService {
 
   completeSignIn() {
     return this.api
-      .post<{ request_token: string }, AccessTokenResponse>({
-        url: 'auth/access_token',
-        version: 4,
-        body: { request_token: this._state$.getValue().requestToken! },
-        headers: {
-          Authorization: `Bearer ${environment.readonlyAccessToken}`
-        }
+      .post<{ request_token: string }, SessionResponse>({
+        path: 'authentication/session/new',
+        body: { request_token: this._state$.getValue().requestToken! }
       })
       .pipe(
-        tap(({ access_token }) => {
-          this.accessTokenService.setToken(access_token)
+        tap(({ session_id }) => {
+          this.accessTokenService.setToken(session_id)
         }),
         switchMap(() => this.fetchUser())
       )
@@ -175,13 +159,9 @@ export class AuthService {
 
     // TODO for some reason an extra call to the DELETE endpoint is still being made
     return this.api
-      .delete<{ access_token: string }, DeleteAccessTokenResponse>({
-        url: 'auth/access_token',
-        version: 4,
-        body: { access_token: accessToken },
-        headers: {
-          Authorization: `Bearer ${environment.readonlyAccessToken}`
-        }
+      .delete<{ session_id: string }, DeleteAccessTokenResponse>({
+        path: 'authentication/session',
+        body: { session_id: accessToken }
       })
       .pipe(
         tap(() => {

@@ -28,22 +28,20 @@ export class Movie09Service {
 
   // See https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopular() {
-    return this.api
-      .get<PagedApi<MovieSummaryApi>>({ url: 'movie/popular' })
-      .pipe(
-        map(
-          (data): AsyncState<MovieSummary[]> => ({
-            isLoading: false,
-            data: data.results.map(movie => ({
-              id: movie.id,
-              title: movie.title,
-              description: movie.overview,
-              poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
-            }))
-          })
-        ),
-        startWith<AsyncState<MovieSummary[]>>({ isLoading: true })
-      )
+    return this.api.get<PagedApi<MovieSummaryApi>>('movie/popular').pipe(
+      map(
+        (data): AsyncState<MovieSummary[]> => ({
+          isLoading: false,
+          data: data.results.map(movie => ({
+            id: movie.id,
+            title: movie.title,
+            description: movie.overview,
+            poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
+          }))
+        })
+      ),
+      startWith<AsyncState<MovieSummary[]>>({ isLoading: true })
+    )
   }
 
   // See https://developers.themoviedb.org/3/account/add-to-watchlist
@@ -53,7 +51,7 @@ export class Movie09Service {
       return throwError(() => new Error('Requires user id'))
     }
     return this.api.post<WatchlistRequestApi, WatchlistResponseApi>({
-      url: `account/${userId}/watchlist`,
+      path: `account/${userId}/watchlist`,
       body: {
         media_type: 'movie',
         media_id: movieId,
@@ -69,9 +67,9 @@ export class Movie09Service {
       distinctUntilChanged(),
       filter(Boolean),
       switchMap(userId =>
-        this.api.get<PagedApi<MovieSummaryApi>>({
-          url: `account/${userId}/watchlist/movies`
-        })
+        this.api.get<PagedApi<MovieSummaryApi>>(
+          `account/${userId}/watchlist/movies`
+        )
       ),
       map(
         (data): AsyncState<number[]> => ({
