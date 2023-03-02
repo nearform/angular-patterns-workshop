@@ -1,7 +1,7 @@
 # Step 8: Flattening RxJS streams
 <div class="dense">
 
-- A common situation when working with RxJS is triggering streams based on another stream, 
+- A common situation when working with RxJS is triggering streams based on another stream 
 - A good example of this a stream of clicks from a button which calling an api that returns an observable stream
 - The naive and intuitive approach would lead to heavy nesting and difficult to understand code
 
