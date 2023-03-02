@@ -48,7 +48,7 @@ export class MyComponent {
 <div class="dense">
 
 - To handle errors within a service, RxJS provides the [`throwError`](https://rxjs.dev/api/index/function/throwError) operator
-- This will create an Observable that will create an error, and then error each time a consumer subscribes to the stream
+- This will create an Observable that will error each time a consumer subscribes to the stream
 - The operator takes an error factory, a function that returns the error:
 
 ```typescript
