@@ -76,6 +76,7 @@
     "jest-preset-angular": "~12.2.3",
     "lint-staged": "^13.1.2",
     "nx": "15.8.1",
+    "playwright-chromium": "^1.31.1",
     "prettier": "^2.8.4",
     "slidev-theme-nearform": "^1.5.0",
     "ts-jest": "28.0.5",
