@@ -24,8 +24,7 @@ class MovieService {}
 # Step 2: Exercise 💻
 
 - Create an Angular service to retrieve **popular movies** from the [The Movie Database](https://www.themoviedb.org/) (TMDB)
-- You will need to create a TMDB account and an **API Read Access Token (v4 auth)** token
-- Add your token to an `.env` file:
+- You will need to create a TMDB account and an **API Read Access Token (v4 auth)** token and add it to an `.env` file:
 
 ```
 TMDB_ACCESS_TOKEN=....
