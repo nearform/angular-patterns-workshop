@@ -8,7 +8,7 @@
 flowchart LR
   stream1[Stream 1]
   stream2[Stream 2]
-  moreStreams[..more streams]
+  moreStreams[...more streams]
   combinationFunction(((Combination function)))
   combinedStream[Combined stream]
   stream1 -.-> combinationFunction
