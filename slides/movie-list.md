@@ -3,7 +3,7 @@
 <div class="dense">
 
 - **Angular** templates allow **conditional rendering** parts of it by using the `ngIf` directive primarily with the shorthand syntax `*ngIf="condition"`
-- Another familiar programming concept, **for loops**, are implemented in **Angular** templates as the `ngFor` directive and can be used with the shorthand syntax `*ngFor="let movie of movies"` 
+- Another familiar programming concept, **for loops**, are implemented in **Angular** templates as the `ngFor` directive and can be used with the shorthand syntax `*ngFor="let movie of movies"`
 - Simple values in templates can be **interpolated** using double curly brackets, e.g. `{{movie.description}}`
 - Another useful concept available in templates is **pipes**, which similar to piping data on the commandline allow transforming values via one or more pipes, e.g. `{{ birthday | date | uppercase}}`
 - When working with observable streams a particularly useful pipe is the `async` pipe which not only transforms the latest value of the stream into a value that can be used in the template but also automatically unsubscribes to the stream when the component is destroyed
@@ -12,7 +12,7 @@
 
 ---
 
-# Step 4: Exercise
+# Step 4: Exercise 💻
 
 <div class="dense">
 
@@ -30,7 +30,7 @@
 
 # Step 4: Trying it out
 
-You can view the results of your work by visiting the page in your browser. 
+You can view the results of your work by visiting the page in your browser.
 
 It should look similar to the below screenshot:
 
