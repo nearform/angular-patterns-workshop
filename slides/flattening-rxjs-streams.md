@@ -3,11 +3,60 @@
 
 - A common situation when working with RxJS is triggering streams based on another stream, an example of this being a stream of clicks from a button which calls an api returning an observable stream
 - The naive and intuitive approach would lead to heavy nesting and difficult to understand code
-- To prevent this and make this ergonomic, **RxJS** lets you apply a number of strategies to flattening streams and is at the core of how asynchronous behaviour is defined
+
+```typescript
+// Don't do this!!!
+this.returnsObservable()
+  .subscribe(
+    success => {
+      this.returnsObservable2()
+        .subscribe(
+          success => {
+            this.returnsObservable3()
+              .subscribe(
+                success => {}
+              )
+          }
+        )
+    }
+  )
+```
+
+</div>
+
+---
+
+# Step 8: RxJS flattening operators
+
+<div class="dense">
+
+- To prevent nesting and make usage more ergonomic, **RxJS** lets you apply a number of strategies to flattening streams
+- This is at the core of how asynchronous behaviours are defined in the library
 - **RxJS** supplies a number of flattening operators including `mergeMap`, `concatMap`, `exhaustMap` and `switchMap` which take the current value of the primary stream and return an **inner** stream
 - For instance the behaviour of `concatMap` is to queue up all emissions from the primary stream one by one to execute the function supplied to it
+
+```typescript
+// Example from https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap
+// emit delay value
+const source = of(2000, 1000);
+// map value from source into inner observable, when complete emit result and move to next
+const example = source.pipe(
+  concatMap(val => of(`Delayed by: ${val}ms`).pipe(delay(val)))
+);
+```
+
+</div>
+
+---
+
+# Step 8: switchMap
+
+<div class="dense">
+
 - In day to day usage a particularly useful flattening operator is `switchMap` which, on receiving a new value from the primary stream, immediately cancels the current inner stream and creates a new inner stream based on this latest value
 - In the case of an api call, it ensures that only one call is being made to the backend, this is based on the latest value and that requests based on the old value are cancelled properly
+
+<img src="/images/switchmap-operator.png" alt="switchMap operator marble diagram" />
 
 </div>
 
