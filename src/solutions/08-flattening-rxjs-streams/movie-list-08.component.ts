@@ -4,7 +4,7 @@ import { Movie08Service } from './movie-08.service'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
-import { delay, Subject, switchMap, takeUntil } from 'rxjs'
+import { Subject, switchMap, takeUntil } from 'rxjs'
 import { MovieSummaryCard08Component } from './movie-summary-card-08.component'
 
 @Component({
@@ -49,16 +49,13 @@ export class MovieList08Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.addToWatchlist$
       .pipe(
-        // Simulate a slow network response
-        delay(10_000),
         takeUntil(this.onDestroy$),
-        // Due to `takeUntil` above, this will never be called if you click the "Add to watchlist" button
-        // and navigate away before the delay has completed
         switchMap(id => this.moviesService.postWatchlist(id, true))
       )
       .subscribe({
         complete: () => {
           // Check that this fires on navigating away
+          // eslint-disable-next-line no-console
           console.log('complete')
         }
       })

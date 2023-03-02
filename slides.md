@@ -5,11 +5,11 @@ highlighter: shiki
 lineNumbers: false
 ---
 
-<img class=logo src="/images/nearform.svg">
+<img class=logo src="/images/nearform.svg" alt="NearForm logo">
 
 # Angular Patterns Workshop
 
-<img src="/images/angular.svg" style="width: 15%;">
+<img src="/images/angular.svg" style="width: 15%;" alt="Angular logo">
 
 <div class="copyright">
 
@@ -59,7 +59,7 @@ src: ./slides/loading.md
 ---
 
 ---
-src: ./slides/watchlist.md
+src: ./slides/flattening-rxjs-streams.md
 ---
 
 ---
