@@ -1,13 +1,28 @@
-# Step 5: Inputs
+# Step 5: Sharing data between child and parent components
 
 <div class="dense">
 
 - A common pattern in Angular for sharing data between parent and child components is to use the `@Input` and `@Output` decorators
+
+</div>
+
+```mermaid
+flowchart TD
+    movie-list(Movie List Component) -->|"@Input() movie"| movie-summary(Movie Summary Component)
+    movie-summary -->|"@Output() onSelect"|movie-list
+```
+
+---
+
+# Step 5: Inputs
+
+<div class="dense">
+
 - You can define an `@Input` for values that your component receives from its parent:
 
 ```typescript
 class MyComponent {
-  @Input() title: string;
+  @Input() title: string
 }
 ```
 
@@ -33,10 +48,10 @@ class MyComponent {
 
 ```typescript
 export class MyComponent {
-  @Output() onNewItem = new EventEmitter<string>();
+  @Output() onNewItem = new EventEmitter<string>()
 
   addNewItem(value: string) {
-    this.onNewItem.emit(value);
+    this.onNewItem.emit(value)
   }
 }
 ```
@@ -49,7 +64,7 @@ export class MyComponent {
 
 </div>
 
---- 
+---
 
 # Step 5: Exercise 💻
 
