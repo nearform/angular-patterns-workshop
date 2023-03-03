@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "angular-patterns-workshop",
+  "npmScope": "app",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -39,6 +39,10 @@
     ],
     "sharedGlobals": []
   },
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  },
   "generators": {
     "@nrwl/angular:application": {
       "style": "css",
@@ -53,6 +57,5 @@
     "@nrwl/angular:component": {
       "style": "css"
     }
-  },
-  "defaultProject": "angular-patterns-workshop"
+  }
 }

@@ -21,7 +21,7 @@ flowchart TD
 
 ```typescript
 class MyComponent {
-  @Input() title: string
+  @Input() title: string;
 }
 ```
 
@@ -58,6 +58,6 @@ class MyComponent {
 - Use [property binding](https://angular.io/guide/property-binding) to bind the the current value of the popular movies stream to the movie input of the movie summary card component
 - Your output should resemble the following:
 
-<img src="images/movie-summary-card.png" alt="Screenshot of movie summary card" />
+<img src="/images/movie-summary-card.png" alt="Screenshot of movie summary card" />
 
 </div>

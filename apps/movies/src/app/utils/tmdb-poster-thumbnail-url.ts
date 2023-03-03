@@ -1,4 +1,4 @@
-import { environment } from 'src/environments/environment'
+import { environment } from '../../environments/environment'
 
 /*
  Given a tmdb poster filename generate the full url for the thumbnail version of the image

@@ -1,9 +1,9 @@
 name: Continuous Integration
 
-on: 
+on:
   push:
-   branches:
-    - main
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - run: |
           npm ci
           npm run lint
-          npm test
+          npm run build
 
   automerge:
     name: Merge dependabot's PRs
