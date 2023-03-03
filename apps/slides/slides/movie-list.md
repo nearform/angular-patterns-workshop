@@ -35,4 +35,3 @@ You can view the results of your work by visiting the page in your browser.
 It should look similar to the below screenshot:
 
 <img src="images/simple-list-of-movies.png" alt="Screenshot of simple movie list" />
-[]()
