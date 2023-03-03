@@ -1,8 +1,11 @@
 {
-  "name": "myorg",
+  "name": "angular-patterns-workshop",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run-many --target=lint",
+    "test": "nx run-many --target=test"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~15.2.0",
