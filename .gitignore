@@ -38,5 +38,5 @@ Thumbs.db
 
 .angular
 
-/src/environments/environment.production.ts
-/src/environments/environment.development.ts
+environment.production.ts
+environment.development.ts

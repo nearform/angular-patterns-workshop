@@ -1,0 +1,18 @@
+{
+  "name": "slides",
+  "version": "1.0.0",
+  "description": "Angular patterns workshop slides",
+  "scripts": {
+    "start": "slidev --open",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "private": true,
+  "dependencies": {},
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@slidev/cli": "^0.40.3",
+    "playwright-chromium": "^1.31.1",
+    "slidev-theme-nearform": "^1.5.0"
+  }
+}
