@@ -5,7 +5,9 @@
   "scripts": {
     "lint": "nx run-many --target=lint",
     "test": "nx run-many --target=test",
-    "build": "nx run-many --target=build"
+    "build": "nx run-many --target=build",
+    "movies": "nx run movies:start",
+    "slides": "nx run slides:start"
   },
   "private": true,
   "dependencies": {
