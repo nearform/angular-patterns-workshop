@@ -1,21 +1,15 @@
 {
-  "root": true,
-  "ignorePatterns": ["!**/*", "jest.preset.js"],
-  "plugins": ["@nrwl/nx"],
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nrwl/nx/typescript",
-        "plugin:@nrwl/nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": "myorg",
             "style": "camelCase"
           }
         ],
@@ -23,12 +17,15 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "myorg",
             "style": "kebab-case"
           }
-        ],
-        "no-console": "warn"
-      }
+        ]
+      },
+      "extends": [
+        "plugin:@nrwl/nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ]
     },
     {
       "files": ["*.html"],
