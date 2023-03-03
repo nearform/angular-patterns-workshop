@@ -66,8 +66,13 @@ src: ./slides/flattening-rxjs-streams.md
 src: ./slides/combine-data.md
 ---
 
+
+
 ---
 src: ./slides/auto-refresh.md
+---
+
+
 ---
 
 <div class="slidev-layout intro">
@@ -75,6 +80,10 @@ src: ./slides/auto-refresh.md
 # Congratulations!
 
 # 👏👏👏
+
+You have completed the workshop and tackled some tricky problems.
+
+We hope has helped you to gain proficiency and confidence with writing apps in Angular.
 
 </div>
 
