@@ -1,4 +1,4 @@
-# Step 3: Auto refresh
+# Step 10: Auto refresh
 
 <div class="dense">
 
@@ -22,7 +22,7 @@ flowchart LR
 
 ---
 
-# Step 3: Exercise 💻
+# Step 10: Exercise 💻
 
 <div class="dense">
 
@@ -37,7 +37,7 @@ flowchart LR
 
 ---
 
-# Step 3: Trying it out
+# Step 10: Trying it out
 
 <div class="dense">
 
