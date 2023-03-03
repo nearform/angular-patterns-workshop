@@ -9,9 +9,5 @@
   "devDependencies": {
     "nx": "^15.8.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com-nearform:nearform/angular-patterns-workshop.git"
-  },
   "license": "UNLICENSED"
 }
