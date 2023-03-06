@@ -1,26 +1,18 @@
 # Step 8: Flattening RxJS streams
+
 <div class="dense">
 
-- A common situation when working with RxJS is triggering streams based on another stream 
+- A common situation when working with RxJS is triggering streams based on another stream
 - A good example of this a stream of clicks from a button which calling an api that returns an observable stream
 - The naive and intuitive approach would lead to heavy nesting and difficult to understand code
 
 ```typescript
 // Don't do this!!!
-this.returnsObservable()
-  .subscribe(
-    success => {
-      this.returnsObservable2()
-        .subscribe(
-          success => {
-            this.returnsObservable3()
-              .subscribe(
-                success => {}
-              )
-          }
-        )
-    }
-  )
+this.returnsObservable().subscribe((success) => {
+  this.returnsObservable2().subscribe((success) => {
+    this.returnsObservable3().subscribe((success) => {});
+  });
+});
 ```
 
 </div>
@@ -40,14 +32,12 @@ this.returnsObservable()
 // An observable stream of paths
 const paths$ = of('/call-me-first', '/then-call-me');
 // map value from source into inner observable, when complete emit result and move to next
-const getResults$ = source.pipe(
-  concatMap(path => this.http.get(path))
-);
+const getResults$ = source.pipe(concatMap((path) => this.http.get(path)));
 
-getResults$.subscribe(response => {
-  // Will sequentially log the responses from the different paths  
-  console.log(response)
-})
+getResults$.subscribe((response) => {
+  // Will sequentially log the responses from the different paths
+  console.log(response);
+});
 ```
 
 </div>
@@ -60,8 +50,8 @@ getResults$.subscribe(response => {
 
 - In day to day usage a particularly useful flattening operator is `switchMap` which, on receiving a new value from the primary stream, immediately cancels the current inner stream and creates a new inner stream based on this latest value
 - In the case of an api call, it ensures that:
-  - only one call is being made to the backend 
-  - this is based on the latest value 
+  - only one call is being made to the backend
+  - this is based on the latest value
   - requests based on the old value are cancelled
 
 <img src="/images/switchmap-operator.png" alt="switchMap operator marble diagram" style="width: 40%; margin: 0 auto" />
@@ -71,6 +61,7 @@ getResults$.subscribe(response => {
 ---
 
 # Step 8: Exercise
+
 <div class="dense">
 
 - Add a new `Subject` property to the movie list component that takes a `number` as it's generic parameter
@@ -84,9 +75,10 @@ getResults$.subscribe(response => {
 ---
 
 # Step 8: Trying it out
+
 <div class="dense">
  
-- Use your browser devtools to slow down network request by setting **throttling** to "Slow 3G" or similar 
+- Use your browser developer tools to slow down network request by setting **throttling** to "Slow 3G" or similar 
 - Click repeatedly on the "Add to watchlist" button on a few different movies
 - Notice that only the last request is sent to the server and other in flight requests are cancelled
 - While not perhaps being as obviously useful here, this can iron out a good deal of UX issues for something like an autocomplete search box

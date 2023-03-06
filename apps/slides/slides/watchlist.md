@@ -25,10 +25,10 @@ flowchart TD
 
 ```typescript
 export class MyComponent {
-  @Output() onNewItem = new EventEmitter<string>()
+  @Output() onNewItem = new EventEmitter<string>();
 
   addNewItem(value: string) {
-    this.onNewItem.emit(value)
+    this.onNewItem.emit(value);
   }
 }
 ```
@@ -47,12 +47,12 @@ export class MyComponent {
 
 <div class="dense">
 
-- To handle errors within a service, RxJS provides the [`throwError`](https://rxjs.dev/api/index/function/throwError) operator
+- To handle errors within a service, **RxJS** provides the [`throwError`](https://rxjs.dev/api/index/function/throwError) operator
 - This will create an Observable that will error each time a consumer subscribes to the stream
-- The operator takes an error factory, a function that returns the error:
+- The operator takes an error factory - a function that returns the error:
 
 ```typescript
-return throwError(() => new Error('There was an error'))
+return throwError(() => new Error('There was an error'));
 ```
 
 - This can be used within Angular services to handle error cases such as invalid method parameters or HTTP error responses
@@ -66,7 +66,7 @@ return throwError(() => new Error('There was an error'))
 <div class="dense">
 
 - Add a mutation method to the movie service that adds a movie to a watchlist
-- You will need to POST to the TMDB `account/{userId}/watchlist` endpoint
+- You will need to POST to the **TMDB** `account/{userId}/watchlist` endpoint
 - 💡 See the [TMDB API Documentation](https://developers.themoviedb.org/3/account/add-to-watchlist) for details of the request body and response
 - You can inject the provided `AuthService` to access the current user id using `currentUser()?.id`
 - 💡 You should use the `throwError` operator to handle the case of no current user
