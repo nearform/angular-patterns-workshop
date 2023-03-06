@@ -22,4 +22,5 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
 - Copy `apps/movies/src/environment/environment.ts` to `apps/movies/src/environment/environment.development.ts` and update `apiKey` to your API key value
 - `npm i`
 - `npm run movies` to start the application
+- To complete the exercises you will need to be logged in (by clicking on he "Login" button in the top right of the UI)
 - [optional] `npm run slides` to start the slide deck
