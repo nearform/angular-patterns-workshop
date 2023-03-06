@@ -60,7 +60,7 @@ getResults$.subscribe((response) => {
 
 ---
 
-# Step 8: Exercise
+# Step 8: Exercise 💻
 
 <div class="dense">
 

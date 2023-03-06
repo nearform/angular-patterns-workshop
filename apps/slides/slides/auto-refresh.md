@@ -8,10 +8,10 @@
 
 ```mermaid
 flowchart LR
-  obs[Observable stream]
-  opTransform[Transforming operator, e.g. map]
-  opTap[tap operator]
-  downstream[Downstream operators and subscribers]
+  obs(Observable stream)
+  opTransform(Transforming operator, e.g. map)
+  opTap(tap operator)
+  downstream(Downstream operators and subscribers)
   sideEffect((Fire and forget side effect))
     obs --> opTransform -- value is transformed --> opTap -- value passed along unchanged --> downstream
     opTap --> sideEffect

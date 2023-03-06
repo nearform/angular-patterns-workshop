@@ -7,11 +7,11 @@
 
 ```mermaid
 flowchart LR
-  stream1[Stream 1]
-  stream2[Stream 2]
-  moreStreams[...more streams]
+  stream1(Stream 1)
+  stream2(Stream 2)
+  moreStreams(...more streams)
   combinationFunction(((Combination function)))
-  combinedStream[Combined stream]
+  combinedStream(Combined stream)
   stream1 -.-> combinationFunction
   stream2 -.-> combinationFunction
   moreStreams -.-> combinationFunction
@@ -45,7 +45,7 @@ const myObservable = combineLatest(
 
 ---
 
-# Step 9: Exercise
+# Step 9: Exercise 💻
 
 <div class="dense">
 
