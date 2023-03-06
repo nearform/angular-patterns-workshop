@@ -13,6 +13,8 @@
 class MovieService {}
 ```
 
+- A common naming convention in Angular is to include `.service` before the file extension, e.g. `hello.service.ts`
+
 </div>
 
 ---
@@ -21,7 +23,7 @@ class MovieService {}
 
 # Step 2: Exercise 💻
 
-- Create an Angular service to retrieve **popular movies** from the [The Movie Database](https://www.themoviedb.org/) (TMDB)
+- Create an Angular service (in the `start-here` directory) to retrieve **popular movies** from the [The Movie Database](https://www.themoviedb.org/) (TMDB)
 - You will need to create a TMDB account and add your **API Key (v3 auth)** to `src/environments/environment.development.ts`:
 
 ```typescript
