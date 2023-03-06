@@ -55,7 +55,12 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "css"
+      "style": "none",
+      "standalone": true,
+      "flat": true,
+      "inlineTemplate": true,
+      "skipTests": true,
+      "path": "apps/movies/src/start-here"
     }
   }
 }
