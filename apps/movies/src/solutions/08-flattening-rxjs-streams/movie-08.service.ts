@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core'
-import { map, startWith, throwError } from 'rxjs'
-import { AuthService } from '../../app/services/auth.service'
-import { ApiService } from '../../app/services/api.service'
-import { PagedApi } from '../../app/types/paged.types'
+import { Injectable } from '@angular/core';
+import { map, startWith, throwError } from 'rxjs';
+import { AuthService } from '../../app/services/auth.service';
+import { ApiService } from '../../app/services/api.service';
+import { PagedApi } from '../../app/types/paged.types';
 import {
   MovieSummary,
-  MovieSummaryApi
-} from '../../app/types/movie-summary.types'
-import { AsyncState } from '../../app/types/async-state.types'
+  MovieSummaryApi,
+} from '../../app/types/movie-summary.types';
+import { AsyncState } from '../../app/types/async-state.types';
 import {
   WatchlistRequestApi,
-  WatchlistResponseApi
-} from '../../app/types/watchlist.types'
+  WatchlistResponseApi,
+} from '../../app/types/watchlist.types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Movie08Service {
   constructor(private api: ApiService, private authService: AuthService) {}
@@ -25,32 +25,32 @@ export class Movie08Service {
       map(
         (data): AsyncState<MovieSummary[]> => ({
           isLoading: false,
-          data: data.results.map(movie => ({
+          data: data.results.map((movie) => ({
             id: movie.id,
             title: movie.title,
-            description: movie.overview,
-            poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
-          }))
+            overview: movie.overview,
+            poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`,
+          })),
         })
       ),
       startWith<AsyncState<MovieSummary[]>>({ isLoading: true })
-    )
+    );
   }
 
   // See https://developers.themoviedb.org/3/account/add-to-watchlist
   postWatchlist(movieId: number, isAdding: boolean) {
-    const userId = this.authService.currentUser()?.id
+    const userId = this.authService.currentUser()?.id;
     if (!userId) {
       // `throwError` is the mechanism that rxjs provides to indicate an error
-      return throwError(() => new Error('Requires user id'))
+      return throwError(() => new Error('Requires user id'));
     }
     return this.api.post<WatchlistRequestApi, WatchlistResponseApi>({
       path: `account/${userId}/watchlist`,
       body: {
         media_type: 'movie',
         media_id: movieId,
-        watchlist: isAdding
-      }
-    })
+        watchlist: isAdding,
+      },
+    });
   }
 }
