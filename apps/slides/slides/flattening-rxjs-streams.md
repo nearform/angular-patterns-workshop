@@ -48,7 +48,7 @@ getResults$.subscribe((response) => {
 
 <div class="dense">
 
-- In day-to-day usage with **Angular**, a particularly useful flattening operator is `switchMap` which, on receiving a new value from the primary stream, immediately cancels the current inner stream and creates a new inner stream based on this latest value
+- In day-to-day usage with Angular, a particularly useful flattening operator is `switchMap` which, on receiving a new value from the primary stream, immediately cancels the current inner stream and creates a new inner stream based on this latest value
 - In the case of an API call, it ensures that:
   - Only one call is being made to the backend
   - This is based on the latest value
