@@ -28,8 +28,7 @@ layout: center
 # Step 1: Exercise 💻
 
 - Create an Angular component that renders **Hello World!**
-- You can use `npx nx g @nrwl/angular:component my-component`
-- 💡 The **Nx** component generator is preconfigured for this workshop and can be viewed under the `generators` property in `nx.json`
+- You can use `npx nx g @nrwl/angular:component my-component --standalone`
 - This generates a standalone component, including TypeScript, HTML, CSS, and test spec files
 - You will work in the `start-here` folder
 - Add the new component to the existing `app-start-here` component's template to view it within the application
