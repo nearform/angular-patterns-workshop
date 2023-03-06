@@ -41,7 +41,7 @@ export class Movie10Service {
           data: data.results.map((movie) => ({
             id: movie.id,
             title: movie.title,
-            description: movie.overview,
+            overview: movie.overview,
             poster: `https://image.tmdb.org/t/p/w92/${movie.poster_path}`,
           })),
         })

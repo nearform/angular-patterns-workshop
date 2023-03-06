@@ -24,7 +24,7 @@ export class Movie06Service {
           data: data.results.map((movie) => ({
             id: movie.id,
             title: movie.title,
-            description: movie.overview,
+            overview: movie.overview,
             poster: tmdbPosterThumbnailUrl(movie.poster_path),
           })),
         })

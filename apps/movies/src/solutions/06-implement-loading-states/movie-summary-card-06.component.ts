@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { MatCardModule } from '@angular/material/card'
-import { MovieSummary } from '../../app/types/movie-summary.types'
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MovieSummary } from '../../app/types/movie-summary.types';
 
 @Component({
   selector: 'app-movie-summary-card',
@@ -16,14 +16,14 @@ import { MovieSummary } from '../../app/types/movie-summary.types'
         <div class="flex">
           <img [src]="movie.poster" [alt]="movie.title" />
           <p>
-            {{ movie.description }}
+            {{ movie.overview }}
           </p>
         </div>
       </mat-card-content>
     </mat-card>
-  `
+  `,
 })
 export class MovieSummaryCard06Component {
   @Input()
-  movie!: MovieSummary
+  movie!: MovieSummary;
 }

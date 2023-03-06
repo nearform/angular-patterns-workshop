@@ -18,7 +18,7 @@ export type MovieSummaryApi = {
 export type MovieSummary = {
   id: number
   title: string
-  description: string
+  overview: string
   poster?: string
 }
 
