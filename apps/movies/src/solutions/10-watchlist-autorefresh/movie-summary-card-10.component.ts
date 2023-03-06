@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { MatCardModule } from '@angular/material/card'
-import { MovieSummaryWithWatchListFlag } from '../../app/types/movie-summary.types'
-import { MatButtonModule } from '@angular/material/button'
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MovieSummaryWithWatchListFlag } from '../../app/types/movie-summary.types';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-movie-summary-card',
@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button'
         <div class="flex">
           <img [src]="movie.poster" [alt]="movie.title" />
           <p>
-            {{ movie.description }}
+            {{ movie.overview }}
           </p>
         </div>
       </mat-card-content>
@@ -40,11 +40,11 @@ import { MatButtonModule } from '@angular/material/button'
         </button>
       </mat-card-actions>
     </mat-card>
-  `
+  `,
 })
 export class MovieSummaryCard10Component {
   @Input()
-  movie!: MovieSummaryWithWatchListFlag
-  @Output() addToWatchlist = new EventEmitter<number>()
-  @Output() removeFromWatchlist = new EventEmitter<number>()
+  movie!: MovieSummaryWithWatchListFlag;
+  @Output() addToWatchlist = new EventEmitter<number>();
+  @Output() removeFromWatchlist = new EventEmitter<number>();
 }

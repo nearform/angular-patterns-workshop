@@ -40,7 +40,7 @@ class MyComponent {
 
 <div class="dense">
 
-- Create a movie summary card component that takes a `movie` summary as an input and displays the movie title, description, and poster image
+- Create a movie summary card component that takes a `movie` summary as an input and displays the movie title, overview, and poster image
 - The poster image will need to be added to the response of the movie service, the **TMDB** API will return a `poster_path` from the `movies/popular` endpoint
 - Bind the movie image to an `img` tag's `src` attribute, and the movie title to the `alt` attribute using [property binding](https://angular.io/guide/property-binding)
 - 💡 You will need to convert the relative `poster_path` to an absolute URL using the `tmdbPosterThumbnailUrl` utility provided in `@app/utilities`

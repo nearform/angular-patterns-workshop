@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core'
-import { PagedApi } from '../../app/types/paged.types'
+import { Injectable } from '@angular/core';
+import { PagedApi } from '../../app/types/paged.types';
 import {
   MovieSummary,
-  MovieSummaryApi
-} from '../../app/types/movie-summary.types'
-import { map } from 'rxjs'
-import { ApiService } from '../../app/services/api.service'
+  MovieSummaryApi,
+} from '../../app/types/movie-summary.types';
+import { map } from 'rxjs';
+import { ApiService } from '../../app/services/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Movie03Service {
   constructor(private api: ApiService) {}
@@ -17,12 +17,12 @@ export class Movie03Service {
   getPopular() {
     return this.api.get<PagedApi<MovieSummaryApi>>('movie/popular').pipe(
       map((data): MovieSummary[] =>
-        data.results.map(movie => ({
+        data.results.map((movie) => ({
           id: movie.id,
           title: movie.title,
-          description: movie.overview
+          overview: movie.overview,
         }))
       )
-    )
+    );
   }
 }
