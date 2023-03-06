@@ -11,16 +11,14 @@ import {
   throwError,
 } from 'rxjs';
 import { ApiService } from '../../app/services/api.service';
-import { PagedApi } from '../../app/types/paged.types';
 import {
+  PagedApi,
   MovieSummary,
   MovieSummaryApi,
-} from '../../app/types/movie-summary.types';
-import { AsyncState } from '../../app/types/async-state.types';
-import {
+  AsyncState,
   WatchlistRequestApi,
   WatchlistResponseApi,
-} from '../../app/types/watchlist.types';
+} from '@app/utilities';
 import { AuthService } from '../../app/services/auth.service';
 
 @Injectable({

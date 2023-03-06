@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MovieSummary } from '../../app/types/movie-summary.types';
+import { MovieSummary } from '@app/utilities';
 
 @Component({
   selector: 'app-movie-summary-card',
