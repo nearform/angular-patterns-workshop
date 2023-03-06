@@ -1,6 +1,14 @@
+---
+layout: center
+---
+
+# RxJS
+
+---
+
 <div class="dense">
 
-# Step 0: RxJS primer
+# Step 0: Observables
 
 - An **Observable** can be compared to a simple JavaScript function
 - Like a function they are lazy and won't do anything until they are invoked
