@@ -1,7 +1,4 @@
-import {
-  MovieSummary,
-  MovieSummaryWithWatchListFlag,
-} from '../types/movie-summary.types';
+import { MovieSummary, MovieSummaryWithWatchListFlag } from '../types';
 
 /**
  * Adds an `onWatchlist` boolean to each movie in the list

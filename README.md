@@ -13,7 +13,7 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
 ### Requirements
 
 - Node LTS
-- A read only access token from [tmdb](https://developers.themoviedb.org/3/getting-started/authentication)
+- An API key from [The Movie Database](https://developers.themoviedb.org/3/getting-started/authentication)
 
 ### Setup
 

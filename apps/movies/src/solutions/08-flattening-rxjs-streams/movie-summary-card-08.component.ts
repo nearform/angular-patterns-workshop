@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MovieSummary } from '../../app/types/movie-summary.types';
+import { MovieSummary } from '@app/utilities';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
