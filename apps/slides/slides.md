@@ -25,6 +25,11 @@ src: ./slides/structure.md
 src: ./slides/solutions.md
 ---
 
+
+---
+src: ./slides/helpers.md
+---
+
 ---
 src: ./slides/get-started.md
 ---
