@@ -9,6 +9,6 @@
 - The `src/solutions` folder contains the solutions to the challenges
 - The 💡 icon indicates hints
 - As there is a focus on leveraging **RxJS** to it's fullest, a warmup step is included to gently introduce or re-acquaint you with the library
-- Feel free to skip this if you are already proficient in it
+- Feel free to skip this if you are already proficient with **RxJS**
 
 </div>
