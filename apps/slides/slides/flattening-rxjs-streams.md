@@ -24,7 +24,7 @@ this.returnsObservable().subscribe((success) => {
 <div class="dense">
 
 - To prevent nesting and make usage more ergonomic, **RxJS** lets you apply a number of strategies to flattening streams
-- This is at the core of how asynchronous behaviours are defined in the library
+- This is at the core of how asynchronous behaviour is defined in the library
 - **RxJS** supplies a number of flattening operators including `mergeMap`, `concatMap`, `exhaustMap` and `switchMap` which take the current value of the primary stream and return an **inner** stream
 - For instance the behaviour of `concatMap` is to queue up all emissions from the primary stream one by one to execute the function supplied:
 
@@ -48,7 +48,7 @@ getResults$.subscribe((response) => {
 
 <div class="dense">
 
-- In day-to-day usage, a particularly useful flattening operator is `switchMap` which, on receiving a new value from the primary stream, immediately cancels the current inner stream and creates a new inner stream based on this latest value
+- In day-to-day usage with Angular, a particularly useful flattening operator is `switchMap` which, on receiving a new value from the primary stream, immediately cancels the current inner stream and creates a new inner stream based on this latest value
 - In the case of an API call, it ensures that:
   - Only one call is being made to the backend
   - This is based on the latest value
