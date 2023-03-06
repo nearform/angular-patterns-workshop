@@ -11,12 +11,15 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
 ## Running locally
 
 ### Requirements
+
 - Node LTS
 - A read only access token from [tmdb](https://developers.themoviedb.org/3/getting-started/authentication)
 
 ### Setup
+
 - Clone this repository
-- Copy `src/environment/environment.ts` to `src/environment/environment.development.ts` and update `readonlyAccessToken` to your token
+- Sign up to [The Movie Database](https://www.themoviedb.org/) and make a note of your API key at Settings -> API -> API Key (v3 auth)
+- Copy `src/environment/environment.ts` to `src/environment/environment.development.ts` and update `apiKey` to your API key value
 - `npm i`
 - `npm run movies` to start the application
 - [optional] `npm run slides` to start the slide deck

@@ -87,7 +87,7 @@ src: ./slides/auto-refresh.md
 
 You have completed the workshop and tackled some tricky problems.
 
-We hope has helped you to gain proficiency and confidence with writing apps in Angular.
+We hope this has helped you to gain proficiency and confidence with writing applications in Angular.
 
 </div>
 

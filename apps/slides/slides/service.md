@@ -6,14 +6,12 @@
 - Services can be marked as injectable using the `@Injectable` decorator
 - Setting `providedIn` to `root`, ensures that Angular creates a single, shared instance and injects it into any class requesting the service
 
-
 ```typescript
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 class MovieService {}
 ```
-
 
 </div>
 
@@ -24,15 +22,15 @@ class MovieService {}
 # Step 2: Exercise 💻
 
 - Create an Angular service to retrieve **popular movies** from the [The Movie Database](https://www.themoviedb.org/) (TMDB)
-- You will need to create a TMDB account and an **API Read Access Token (v4 auth)** token and add it to an `.env` file:
+- You will need to create a TMDB account and add your **API Key (v3 auth)** to `src/environments/environment.development.ts`:
 
-```
-TMDB_ACCESS_TOKEN=....
+```typescript
+apiKey: '<YOUR_API_KEY_HERE>',
 ```
 
-- Angular provides a stream based `http` client for making HTTP requests
-- This tutorial provides an `ApiService` that wraps the `http` service and adds authentication headers
-- Inject the `ApiService` into your service constructor and use it to make an HTTP request to `movies/popular`
+- Angular provides a stream based `HttpClient` for making HTTP requests
+- This tutorial provides an `ApiService` that wraps the `HttpClient` and adds authentication headers
+- Inject the `ApiService` into your service constructor and use it to make an HTTP GET request to `movies/popular`
 - 💡 See the [TMDB API Documentation](https://developers.themoviedb.org/3/movies/get-popular-movies) for details on the response shape
 - Your service method will return a stream to which components and templates can subscribe
 - Use the `pipe` and `map` operators to map the stream values into collection of movie `id`, `title`, and `description`
