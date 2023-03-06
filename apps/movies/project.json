@@ -16,7 +16,7 @@
         "tsConfig": "apps/movies/tsconfig.app.json",
         "assets": ["apps/movies/src/favicon.ico", "apps/movies/src/assets"],
         "styles": [
-          "apps/movies/node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
           "apps/movies/src/styles/styles.css"
         ],
         "scripts": []
