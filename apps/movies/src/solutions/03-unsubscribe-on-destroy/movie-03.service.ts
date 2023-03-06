@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PagedApi } from '../../app/types/paged.types';
-import {
-  MovieSummary,
-  MovieSummaryApi,
-} from '../../app/types/movie-summary.types';
+import { PagedApi, MovieSummary, MovieSummaryApi } from '@app/utilities';
 import { map } from 'rxjs';
 import { ApiService } from '../../app/services/api.service';
 

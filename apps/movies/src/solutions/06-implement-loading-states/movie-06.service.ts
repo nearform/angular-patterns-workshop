@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { PagedApi } from '../../app/types/paged.types';
 import {
+  PagedApi,
   MovieSummary,
   MovieSummaryApi,
-} from '../../app/types/movie-summary.types';
+  AsyncState,
+} from '@app/utilities';
 import { delay, map, startWith } from 'rxjs';
-import { AsyncState } from '../../app/types/async-state.types';
 import { ApiService } from '../../app/services/api.service';
 import { tmdbPosterThumbnailUrl } from '@app/utilities';
 
