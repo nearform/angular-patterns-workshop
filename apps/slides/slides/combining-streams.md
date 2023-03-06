@@ -1,8 +1,9 @@
 # Step 9: Combining streams
+
 <div class="dense">
 
- - Sometimes we need to combine data from two or more observable streams
- - A good example of this is when a page or feature relies on a combination of data from multiple different endpoints
+- Sometimes we need to combine data from two or more observable streams
+- A good example of this is when a page or feature relies on a combination of data from multiple endpoints:
 
 ```mermaid
 flowchart LR
@@ -16,25 +17,28 @@ flowchart LR
   moreStreams -.-> combinationFunction
   combinationFunction -.-> combinedStream
 ```
+
 </div>
 
 ---
 
 # Step 9: combineLatest
+
 <div class="dense">
 
-- `combineLatest` takes an array of observables and transform the latest values from all streams into a single stream
+- [`combineLatest`](https://rxjs.dev/api/operators/combineLatest) takes an array of Observables and transforms the latest values from all streams into a single stream
 - Subsequent transforms (using the `pipe` method) will receive the latest values as a tuple: `[valueFromObs1, valueFromObs2]` to be transformed based on the function return value
 - When using this operator, all supplied streams must emit at least a single value before any downstream values will be emitted
 - For this reason `startWith` can be very useful to avoid blocking the stream:
+
 ```typescript
 const myObservable = combineLatest(
-    functionThatReturnsMainData(),
-    // Will allow the stream to start with `null` initially as the value for the stream
-    functionThatReturnsSecondaryData().pipe(startWith(null))
-  ).pipe(([mainData, secondaryDataPossiblyNull]) => {
-      // Combine the two streams
-  })
+  functionThatReturnsMainData(),
+  // Will allow the stream to start with `null` initially as the value for the stream
+  functionThatReturnsSecondaryData().pipe(startWith(null))
+).pipe(([mainData, secondaryDataPossiblyNull]) => {
+  // Combine the two streams
+});
 ```
 
 </div>
@@ -42,6 +46,7 @@ const myObservable = combineLatest(
 ---
 
 # Step 9: Exercise
+
 <div class="dense">
 
 - Create a service method in the movies service that retrieves the list of movies that the user has added to their watchlist by calling the `account/${userId}/watchlist/movies` endpoint
@@ -55,9 +60,10 @@ const myObservable = combineLatest(
 ---
 
 # Step 9: Trying it out
+
 <div class="dense">
 
-- Add a movie to your watch list by clicking the "Add to watchlist" button
+- Add a movie to your watchlist by clicking the "Add to watchlist" button
 - Refresh the page
 - The "Add to watchlist" button should now be disabled for the added movie
 
