@@ -4,7 +4,7 @@
 
 - Angular templates allow **conditional rendering** by using the `NgIf` directive primarily with the shorthand syntax `*ngIf="condition"`
 - Another familiar programming concept, **for loops**, are implemented in Angular templates as the `NgForOf` directive and can be used with the shorthand syntax `*ngFor="let movie of movies"`
-- Simple values in templates can be **interpolated** using double curly brackets, e.g. `{{movie.description}}`
+- Simple values in templates can be **interpolated** using double curly brackets, e.g. `{{movie.overview}}`
 - Another useful concept available in templates is **pipes**, which similar to piping data on the command-line, allow transforming values via one or more pipes, e.g. `{{ birthday | date | uppercase}}`
 - When working with Observable streams, a particularly useful pipe is `async`, which not only unwraps the value, but also automatically unsubscribes to the stream when the component is destroyed
 
