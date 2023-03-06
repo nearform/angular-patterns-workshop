@@ -15,7 +15,7 @@
     "apps/slides"
   ],
   "devDependencies": {
-    "@nrwl/cypress": "15.8.3",
+    "@nrwl/cypress": "15.8.5",
     "@nrwl/eslint-plugin-nx": "15.8.3",
     "@nrwl/jest": "15.8.3",
     "@nrwl/js": "15.8.3",
