@@ -8,7 +8,7 @@
   - `MovieSummaryApi` - the type of the individual movies returned from the popular movies endpoint
   - `WatchlistRequestApi` & `WatchlistResponseApi` - request and response types for the watchlist post endpoint 
   - `PagedApi` - the general structure for TMDB responses that are lists of data (e.g. popular movies)
-- These can be supplied to the api service as follows: `apiService.post<WatchlistRequestApi, WatchlistResponseApi>({...})` and `apiService.get<PagedApi<MovieSummaryApi>>('movies/popular')`
+- These can be supplied to the API service as follows: `apiService.post<WatchlistRequestApi, WatchlistResponseApi>({...})` and `apiService.get<PagedApi<MovieSummaryApi>>('movies/popular')`
 - Also included are some custom types that you may opt to use, including `MovieSummary` (a cleaner version of the API response) and `AsyncState` that provides a simple type to indicate loading status 
 
 </div>
