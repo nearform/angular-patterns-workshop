@@ -2,7 +2,8 @@
 
 # Some helpful utilities and types
 - To save time, some utility functions and types have been included in `packages/utilities`, importable via `@app/utilities`
-- `tmdbPosterThumbnailUrl` generates a thumbnail image url from the image path returned from TMDB and `withWatchListFlag` adds an `onWatchlist` boolean flag to a list of movies based on the supplied array of watchlist movie ids
+  - `tmdbPosterThumbnailUrl`:  generates a thumbnail image url from the image path returned from TMDB
+  - `withWatchListFlag`: adds an `onWatchlist` boolean flag to a list of movies based on the supplied array of watchlist movie ids
 - Type definitions are available for the TMDB API:
   - `MovieSummaryApi` - the type of the individual movies returned from the popular movies endpoint
   - `WatchlistRequestApi` & `WatchlistResponseApi` - request and response types for the watchlist post endpoint 
