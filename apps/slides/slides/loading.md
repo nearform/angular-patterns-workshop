@@ -1,30 +1,3 @@
-# Step 6: Structural directives
-
-<div class="dense">
-
-- Angular provides a set of built-in [structural directives](https://angular.io/guide/structural-directives) (such as `NgIf`, `NgForOf`, `NgSwitch` and others) which are commonly used in all Angular projects
-- Angular transforms the shorthand form (e.g. `*ngIf`, `*ngFor`) into a surrounding `ng-template` and the directive becomes a property binding on the `ng-template`, e.g:
-
-```html
-<div *ngIf="movie">{{move.title}}</div>
-```
-
-Becomes an `ng-template` that is removed from the final DOM:
-
-```html
-<ng-template [ngIf]="movie"><div>{{movie.title}}</div></ng-template>
-```
-
-- You can use `ng-container` if you wish to apply structural directives without an additional HTML element being added to the DOM:
-
-```html
-<ng-container *ngIf="movie"><div>{{movie.title}}</div></ng-container>
-```
-
-</div>
-
----
-
 # Step 6: Loading states
 
 <div class="dense">
