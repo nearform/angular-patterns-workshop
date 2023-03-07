@@ -41,10 +41,12 @@ class MyComponent {
 <div class="dense">
 
 - Create a movie summary card component that takes a `movie` summary as an input and displays the movie title, overview, and poster image
+- 💡 Speed things up by copying and pasting the relevant code from the movie list component (while removing the `*ngFor` directive)
 - The poster image will need to be added to the response of the movie service, the **TMDB** API will return a `poster_path` from the `movies/popular` endpoint
 - Bind the movie image to an `img` tag's `src` attribute, and the movie title to the `alt` attribute using [property binding](https://angular.io/guide/property-binding)
 - 💡 You will need to convert the relative `poster_path` to an absolute URL using the `tmdbPosterThumbnailUrl` utility provided in `@app/utilities`
-- 💡 You can use the [Material UI Card](https://material.angular.io/components/card/overview) component to style the movie summary
+- 💡 Add a non-null assertion to the `movie` (`@Input() movie!: MovieSummary;`) property to let TypeScript know that you will always pass this to the component (or alternatively use [a more comprehensive approach](https://timdeschryver.dev/blog/required-input-parameters))
+- 💡Surround the image and overview in a container with a `flex` class to place the image and text side by side to each other
 
 </div>
 
