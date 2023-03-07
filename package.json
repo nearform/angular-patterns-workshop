@@ -7,7 +7,8 @@
     "test": "nx run-many --target=test",
     "build": "nx run-many --target=build",
     "movies": "nx run movies:start",
-    "slides": "nx run slides:start"
+    "slides": "nx run slides:start",
+    "slides:build": "nx run slides:build"
   },
   "private": true,
   "workspaces": [
