@@ -17,7 +17,7 @@
 <div class="dense">
 
 - Update the template of your component to render a list of popular movies based on the response from **TMDB** which you have prepared in previous steps
-- You will need to create a public property on the component with the movies Observable so that the template can access it
+- You will need to create a public property on the component with the movies Observable for the template to access
 - Include both the **title** and **overview** fields in the rendered output
 - You will need to use `*ngIf` to ensure the movies stream is ready, along with the `async` pipe to prepare the movies list for use in the template
 - `*ngFor` will be required to loop through each of the movies in the list
