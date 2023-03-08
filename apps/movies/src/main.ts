@@ -9,9 +9,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { provideServerErrorInterceptor } from './app/server-error-interceptor';
+import { provideClientErrorHandler } from './app/client-error-handler';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideClientErrorHandler(),
     provideServerErrorInterceptor(),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     provideHttpClient(),

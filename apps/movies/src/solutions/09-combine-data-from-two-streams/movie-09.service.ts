@@ -46,7 +46,9 @@ export class Movie09Service {
   postWatchlist(movieId: number, isAdding: boolean) {
     const userId = this.authService.currentUser()?.id;
     if (!userId) {
-      return throwError(() => new Error('Requires user id'));
+      return throwError(
+        () => new Error('Requires user id, ensure that you are logged in')
+      );
     }
     return this.api.post<WatchlistRequestApi, WatchlistResponseApi>({
       path: `account/${userId}/watchlist`,
