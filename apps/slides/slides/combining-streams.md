@@ -50,6 +50,7 @@ const myObservable = combineLatest(
 <div class="dense">
 
 - Create a service method in the movies service that retrieves the list of movies that the user has added to their watchlist by calling the `account/${userId}/watchlist/movies` endpoint ([TMDB API Documentation](https://developers.themoviedb.org/3/account/get-movie-watchlist))
+- 💡 The `user$` prop from `AuthService` can be used to get the user id (`user$.pipe(map((user) => user?.id))`)
 - 💡 You only need to return a list of movie ids which can be extracted from the returned payload
 - Use the `combineLatest` operator in the movie list component to combine the two streams
 - 💡 You can use the helper function `withWatchlistFlag` (from `@app/utilities`) to combine the arrays from the two streams, e.g. `withWatchListFlag(moviesQuery?.data, watchListQuery?.data)`
