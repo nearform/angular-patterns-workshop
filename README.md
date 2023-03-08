@@ -25,5 +25,6 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
   - Update the `apiKey` property with the value of your API key
 - `npm i`
 - `npm run movies` to start the application
-- To complete the exercises you will need to be logged in (by clicking on he "Login" button in the top right of the UI)
-- [optional] `npm run slides` to start the slide deck
+  - To complete the exercises you will need to be signed in to TMDB
+  - To sign in, select the "Login" button in the top right of the UI
+- `npm run slides` to start the slide deck (optional)
