@@ -62,8 +62,8 @@ export class Movie09Service {
 
   // See https://developers.themoviedb.org/3/account/get-movie-watchlist
   getUserWatchlist() {
-    return this.authService.state$.pipe(
-      map((state) => state.user?.id),
+    return this.authService.user$.pipe(
+      map((user) => user?.id),
       distinctUntilChanged(),
       filter(Boolean),
       switchMap((userId) =>

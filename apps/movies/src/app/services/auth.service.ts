@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject, EMPTY, map, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  EMPTY,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SessionService } from './session.service';
 import { combineLatest } from 'rxjs';
@@ -74,6 +82,17 @@ export class AuthService {
     map(([state, accessToken]) => !state.user && !accessToken)
   );
 
+  user$ = this.state$.pipe(
+    map(({ user }) => user),
+    distinctUntilChanged(),
+    switchMap((user) => {
+      if (user) {
+        return of(user);
+      }
+      return this.fetchUser();
+    })
+  );
+
   constructor(
     private api: ApiService,
     private sessionService: SessionService
@@ -107,14 +126,17 @@ export class AuthService {
 
   private fetchUser() {
     return this.api.get<UserApi>('account').pipe(
+      map(
+        (userRaw): User => ({
+          id: userRaw.id,
+          username: userRaw.username,
+        })
+      ),
       tap({
-        next: (userRaw) => {
+        next: (user) => {
           this._state$.next({
             ...this._state$.getValue(),
-            user: {
-              id: userRaw.id,
-              username: userRaw.username,
-            },
+            user,
           });
         },
         error: () => {

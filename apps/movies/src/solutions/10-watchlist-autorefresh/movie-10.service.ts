@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   combineLatest,
-  distinctUntilChanged,
   filter,
   map,
   startWith,
@@ -70,10 +69,7 @@ export class Movie10Service {
   getUserWatchlist() {
     // This uses the `this.watchlistUpdated$` stream to re-trigger fetch
     return combineLatest([
-      this.authService.state$.pipe(
-        map((state) => state.user?.id),
-        distinctUntilChanged()
-      ),
+      this.authService.user$,
       this.watchlistUpdated$.pipe(startWith(null)),
     ]).pipe(
       map(([userId]) => userId),
