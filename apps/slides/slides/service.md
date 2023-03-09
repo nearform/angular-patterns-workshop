@@ -13,7 +13,7 @@
 class MovieService {}
 ```
 
-- A common naming convention in Angular is to include `.service` before the file extension, e.g. `hello.service.ts`
+- A common naming convention in Angular is to include `.service` before the file extension, e.g. `movie.service.ts`
 
 </div>
 
@@ -27,7 +27,7 @@ class MovieService {}
 - You will need to create a TMDB account and add your **API Key (v3 auth)** to `src/environments/environment.development.ts`:
 
 ```typescript
-apiKey: '<YOUR_API_KEY_HERE>'
+apiKey: '<YOUR_API_KEY_HERE>';
 ```
 
 - Angular provides a stream based `HttpClient` for making HTTP requests
