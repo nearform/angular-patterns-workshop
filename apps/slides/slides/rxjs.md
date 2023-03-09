@@ -34,11 +34,11 @@ myObservable2$.subscribe((nextValue) => console.log(nextValue));
 
 # Step 0: Creating and transforming Observables
 
-- While you will most commonly work with Observables that are returned from services such as the Angular **HttpClient**, simple Observables can be created using the `of` operator provided by **RxJS**
+- While you will most commonly work with Observables that are returned from services such as the Angular **HttpClient**, simple Observables can be created using the [`of`](https://rxjs.dev/api/index/function/of) creation operator provided by **RxJS**
 - `const myObs$ = of(1, 2, 3, 4)` creates an Observable that will emit each of the numbers in sequence when you subscribe to the stream
-- Observables can be chained with a call to its `pipe` method which accepts single or multiple **operators** to transform the stream
-- For instance when the **RxJS** `map` function is supplied as an argument to `pipe`, it works similarly to the standard JavaScript array `map` method, but transforms each value as it is received over time rather than immediately iterating over all elements
-- More complex higher order operators such as `mergeMap`, `switchMap` and `concatMap` allow combining other streams and dynamically altering the stream topology (these will be touched on later in the workshop)
+- Observables can be chained with a call to its [`pipe`](https://rxjs.dev/guide/operators#piping) method which accepts single or multiple **operators** to transform the stream
+- For instance when the **RxJS** [`map`](https://rxjs.dev/api/index/function/map) function is supplied as an argument to `pipe`, it works similarly to the standard JavaScript array `map` method, but transforms each value as it is received over time rather than immediately iterating over all elements
+- More complex higher order operators such as [`mergeMap`](https://rxjs.dev/api/index/function/mergeMap), [`switchMap`](https://rxjs.dev/api/index/function/switchMap) and [`concatMap`](https://rxjs.dev/api/index/function/concatMap) allow combining other streams and dynamically altering the stream topology (these will be touched on later in the workshop)
 
 </div>
 
