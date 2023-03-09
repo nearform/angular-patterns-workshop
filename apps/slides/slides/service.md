@@ -13,7 +13,76 @@
 class MovieService {}
 ```
 
-- A common naming convention in Angular is to include `.service` before the file extension, e.g. `movie.service.ts`
+- 💡 A common naming convention in Angular is to include `.service` before the file extension, e.g. `movie.service.ts`
+
+</div>
+
+---
+
+<div class="dense">
+
+# Step 2: Environments
+
+- Angular supports defining differently named [build configurations](https://angular.io/guide/build) for your project, such as `development` and `staging`, with different defaults
+- The build, serve, and test commands can replace files with appropriate versions for your intended target environment
+- For example, you can define an `environment.ts` with default configuration:
+
+```typescript
+// environment.ts
+export const environment = {
+  apiUrl: 'http://my-prod-url',
+};
+```
+
+</div>
+
+---
+
+<div class="dense">
+
+# Step 2: Environments
+
+- You can then define overrides in environment specific files:
+
+```typescript
+// environment.development.ts
+export const environment = {
+  apiUrl: 'http://my-development-url',
+};
+```
+
+- Within your code import from `environment.ts` and Angular will switch out the appropriate file at build/serve/test time:
+
+```typescript
+import { environment } from 'environments/environment';
+```
+
+- 💡 You can specify which configuration to use as a parameter to the Nx command, e.g. `npx nx build --configuration=development`
+- 💡 The default configurations for each Nx command are specified in the `project.json` file
+
+</div>
+
+---
+
+<div class="dense">
+
+# Step 2: HttpClient
+
+- Angular provides a stream based [`HttpClient`](https://angular.io/guide/http) for making HTTP requests
+
+```typescript
+class MyService implements OnInit {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get<Config>('config').subscribe((data) => console.log(data));
+  }
+}
+```
+
+- 💡 You should always unsubscribe from an Observable when a component is destroyed, this is covered in the next step
+- 💡 This workshop provides an `ApiService` that wraps the `HttpClient` and adds authentication headers
+- 💡 In this workshop you should use the `ApiService` rather than the `HttpClient` directly to avoid authentication errors from TMDB
 
 </div>
 
@@ -24,18 +93,15 @@ class MovieService {}
 # Step 2: Exercise 💻
 
 - Create an Angular service (in the `start-here` directory) to retrieve **popular movies** from the [The Movie Database](https://www.themoviedb.org/) (TMDB)
-- You will need to create a TMDB account and add your **API Key (v3 auth)** to `src/environments/environment.development.ts`:
+- Your service method will return a stream to which components and templates can subscribe
+- Use the `pipe` and `map` operators to map the stream values into a collection of movies (`id`, `title`, and `overview`)
+- 💡 Inject the `ApiService` into your service constructor and use it to make an HTTP GET request to `movies/popular`
+- 💡 See the [TMDB API Documentation](https://developers.themoviedb.org/3/movies/get-popular-movies) for details on the response shape
+- 💡 You will need to create a TMDB account and add your **API Key (v3 auth)** to a development environment file (`src/environments/environment.development.ts`):
 
 ```typescript
-apiKey: '<YOUR_API_KEY_HERE>';
+apiKey: '<YOUR_API_KEY_HERE>',
 ```
-
-- Angular provides a stream based `HttpClient` for making HTTP requests
-- This tutorial provides an `ApiService` that wraps the `HttpClient` and adds authentication headers
-- Inject the `ApiService` into your service constructor and use it to make an HTTP GET request to `movies/popular`
-- 💡 See the [TMDB API Documentation](https://developers.themoviedb.org/3/movies/get-popular-movies) for details on the response shape
-- Your service method will return a stream to which components and templates can subscribe
-- Use the `pipe` and `map` operators to map the stream values into collection of movie `id`, `title`, and `overview`
 
 </div>
 

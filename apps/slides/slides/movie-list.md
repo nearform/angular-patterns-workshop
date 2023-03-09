@@ -49,7 +49,7 @@ Becomes an `ng-template` that is removed from the final DOM:
 - You will need to use `*ngIf` to ensure the movies stream is ready, along with the `async` pipe to prepare the movies list for use in the template
 - `*ngFor` will be required to loop through each of the movies in the list
 - Finally, you will need to use interpolation syntax (`{{item.value}}`) to render the values from each of the movies
-- 💡 Consider using [Material UI Card](https://material.angular.io/components/card/overview) to improve the visual appearance of the list (which is installed and ready to use)
+- 💡 Consider using [Material Card](https://material.angular.io/components/card/overview) to improve the visual appearance of the list (which is installed and ready to use)
 - 💡 To add a little space in the list try adding the `stack` class to the list container
 
 </div>
