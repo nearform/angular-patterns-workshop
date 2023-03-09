@@ -23,9 +23,35 @@ layout: center
 
 ---
 
+# Step 1: Lifecycle hooks
+
 <div class="dense">
 
+- Angular components have a lifecycle that includes initialisation, change detection, and destruction
+- Your component can use [lifecycle hooks](https://angular.io/guide/lifecycle-hooks) to respond to these lifecycle events and run custom logic. Common component methods include `ngOnInit`, `ngOnChanges`, and `ngOnDestroy`
+- It is recommended that the corresponding interfaces (e.g. `OnInit`, `OnDestroy` etc) are used to ensure the correct lifecycle method names are enforced:
+
+```typescript
+class MyComponent implements OnInit, OnDestroy {
+  constructor(private logger: LoggerService) {}
+
+  ngOnInit() {
+    this.logger.log('OnInit');
+  }
+
+  ngOnDestroy() {
+    this.logger.log('OnDestroy');
+  }
+}
+```
+
+</div>
+
+---
+
 # Step 1: Exercise 💻
+
+<div class="dense">
 
 - Create an Angular component that renders **Hello World!!!**
 - You can use `npx nx g @nrwl/angular:component my-component --standalone`
@@ -38,9 +64,9 @@ layout: center
 
 ---
 
-<div class="dense">
-
 # Step 1: Trying it out
+
+<div class="dense">
 
 You can view the results of your work by visiting the page in your browser.
 

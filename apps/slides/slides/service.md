@@ -19,9 +19,9 @@ class MovieService {}
 
 ---
 
-<div class="dense">
-
 # Step 2: Environments
+
+<div class="dense">
 
 - Angular supports defining differently named [build configurations](https://angular.io/guide/build) for your project, such as `development` and `staging`, with different defaults
 - The build, serve, and test commands can replace files with appropriate versions for your intended target environment
@@ -38,9 +38,9 @@ export const environment = {
 
 ---
 
-<div class="dense">
-
 # Step 2: Environments
+
+<div class="dense">
 
 - You can then define overrides in environment specific files:
 
@@ -64,9 +64,9 @@ import { environment } from 'environments/environment';
 
 ---
 
-<div class="dense">
-
 # Step 2: HttpClient
+
+<div class="dense">
 
 - Angular provides a stream based [`HttpClient`](https://angular.io/guide/http) for making HTTP requests
 
@@ -88,9 +88,9 @@ class MyService implements OnInit {
 
 ---
 
-<div class="dense">
-
 # Step 2: Exercise 💻
+
+<div class="dense">
 
 - Create an Angular service (in the `start-here` directory) to retrieve **popular movies** from the [The Movie Database](https://www.themoviedb.org/) (TMDB)
 - Your service method will return a stream to which components and templates can subscribe
@@ -107,9 +107,9 @@ apiKey: '<YOUR_API_KEY_HERE>',
 
 ---
 
-<div class="dense">
-
 # Step 2: Trying it out
+
+<div class="dense">
 
 - Inject your service into your Hello World component via the constructor
 - To test your service response, you can subscribe to your _get popular movies_ method from the component and `console.log` any values from the stream
