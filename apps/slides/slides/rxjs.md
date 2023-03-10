@@ -15,6 +15,7 @@ layout: center
 - Unlike functions however, they allow outputting multiple values over time
 - Similarly to a function call for functions, an Observable stream is "activated" when you **subscribe** to the stream
 - Up to that point it can be thought of as a blueprint for the behaviour and transformation of the Observable
+- Observable variable names are typically postfixed with a `$` to indicate that they are a stream
 
 ```typescript
 // Does nothing
