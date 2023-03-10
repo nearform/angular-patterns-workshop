@@ -58,7 +58,7 @@ Becomes an `ng-template` that is removed from the final DOM:
 
 # Step 4: Trying it out
 
-You can view the results of your work by visiting the page in your browser.
+You can view the results of your work by visiting the page in your browser
 
 It should look similar to the following:
 

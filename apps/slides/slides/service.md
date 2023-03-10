@@ -3,14 +3,16 @@
 <div class="dense">
 
 - An Angular service is a TypeScript class that can be used to share business or data access logic across an application
-- Services can be marked as injectable using the `@Injectable` decorator
-- Setting `providedIn` to `root`, ensures that Angular creates a single, shared instance and injects it into any class requesting the service
+- Services can be marked as injectable using the [`@Injectable`](https://angular.io/guide/dependency-injection) decorator
+- Setting `providedIn` to `root` ensures that Angular creates a single, shared instance and injects it into any class requesting the service
 
 ```typescript
 @Injectable({
   providedIn: 'root',
 })
-class MovieService {}
+export class MovieService {
+  ...
+}
 ```
 
 - 💡 A common naming convention in Angular is to include `.service` before the file extension, e.g. `movie.service.ts`
@@ -111,7 +113,7 @@ apiKey: '<YOUR_API_KEY_HERE>',
 
 <div class="dense">
 
-- Inject your service into your Hello World component via the constructor
+- Inject your service into your movie list component via the constructor
 - To test your service response, you can subscribe to your _get popular movies_ method from the component and `console.log` any values from the stream
 - 💡 You can implement the `OnInit` interface and subscribe to the stream within the component's `ngOnInit` lifecycle event
 

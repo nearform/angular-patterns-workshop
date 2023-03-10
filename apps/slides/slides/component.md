@@ -53,11 +53,12 @@ class MyComponent implements OnInit, OnDestroy {
 
 <div class="dense">
 
-- Create an Angular component that renders **Hello World!!!**
-- You can use `npx nx g @nrwl/angular:component my-component --standalone`
+- Create an Angular `MovieListComponent` that initially renders **Hello World!!!**
+- You can use `npx nx g @nrwl/angular:component movie-list --standalone`
 - This generates a standalone component, including TypeScript, HTML, CSS, and test spec files
 - You will work in the `start-here` folder
 - Add the new component to the existing `start-here.component.ts` component's template to view it within the application
+- 💡 The movie list component will be adapted in later steps to render a list of popular movies
 - 💡 The **Nx** component generator is preconfigured for this workshop and can be viewed under the `generators` property in `nx.json`
 
 </div>
@@ -68,7 +69,7 @@ class MyComponent implements OnInit, OnDestroy {
 
 <div class="dense">
 
-You can view the results of your work by visiting the page in your browser.
+You can view the results of your work by visiting the page in your browser
 
 It should look similar to the following:
 
