@@ -52,9 +52,9 @@ class MyComponent {
 
 ---
 
-# Step 5: Trying it out
-
 <div class="dense">
+
+# Step 5: Trying it out
 
 - You can add your new movie summary card component to the list of `imports` for the movie list component in order to use it within the move list template
 - Use [property binding](https://angular.io/guide/property-binding) to bind the current value of the popular movies stream to the `movie` input of the movie summary card component
