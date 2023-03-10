@@ -15,6 +15,9 @@
     "apps/movies",
     "apps/slides"
   ],
+  "engines": {
+    "node": ">=16"
+  },
   "dependencies": {
     "@angular/animations": "~15.2.1",
     "@angular/cdk": "^15.2.1",

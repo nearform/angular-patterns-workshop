@@ -7,7 +7,6 @@
 - Another familiar programming concept, **for loops**, are implemented in Angular templates as the `NgForOf` directive and can be used with the shorthand syntax `*ngFor="let movie of movies"`
 - Simple values in templates can be **interpolated** using double curly brackets, e.g. `{{movie.overview}}`
 - Templates also support **pipes**, which similar to piping data on the command-line, allow transforming values via one or more chained functions, e.g. `{{ birthday | date | uppercase}}`
-- When working with Observable streams, a particularly useful pipe is `async`, which not only unwraps the value, but also automatically unsubscribes to the stream when the component is destroyed
 
 </div>
 
@@ -39,6 +38,27 @@ Becomes an `ng-template` that is removed from the final DOM:
 
 ---
 
+# Step 4: `async` pipe
+
+<div class="dense">
+
+- When working with Observable streams, a particularly useful pipe is [`async`](https://angular.io/api/common/AsyncPipe)
+- This pipe not only unwraps the value, but also automatically unsubscribes to the stream when the component is destroyed
+- You can use an `as` alias with the `async` pipe to refer to the subscribed stream
+- This can be used to remove the `$` postfix from the component stream property:
+
+```html
+<ng-container *ngIf="movies$ | async as movies">
+  <ul *ngFor="let movie of movies">
+    <li>{{ movie.title }}</li>
+  </ul>
+</ng-container>
+```
+
+</div>
+
+---
+
 # Step 4: Exercise 💻
 
 <div class="dense">
@@ -49,7 +69,7 @@ Becomes an `ng-template` that is removed from the final DOM:
 - You will need to use `*ngIf` to ensure the movies stream is ready, along with the `async` pipe to prepare the movies list for use in the template
 - `*ngFor` will be required to loop through each of the movies in the list
 - Finally, you will need to use interpolation syntax (`{{item.value}}`) to render the values from each of the movies
-- 💡 Consider using [Material UI Card](https://material.angular.io/components/card/overview) to improve the visual appearance of the list (which is installed and ready to use)
+- 💡 Consider using [Material Card](https://material.angular.io/components/card/overview) to improve the visual appearance of the list (which is installed and ready to use)
 - 💡 To add a little space in the list try adding the `stack` class to the list container
 
 </div>
@@ -58,7 +78,7 @@ Becomes an `ng-template` that is removed from the final DOM:
 
 # Step 4: Trying it out
 
-You can view the results of your work by visiting the page in your browser.
+You can view the results of your work by visiting the page in your browser
 
 It should look similar to the following:
 
