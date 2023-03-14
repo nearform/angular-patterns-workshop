@@ -11,8 +11,8 @@ layout: center
 # Step 0: Observables
 
 - An **Observable** can be compared to a simple JavaScript function
-- Like a function they are lazy and won't do anything until they are invoked
-- Unlike functions however, they allow outputting multiple values over time
+- They are similar to functions in that they are _lazy_ and won't do anything until they are invoked
+- However, unlike functions, they allow outputting _multiple values_ over time
 - Similarly to a function call for functions, an Observable stream is "activated" when you **subscribe** to the stream
 - Up to that point it can be thought of as a blueprint for the behaviour and transformation of the Observable
 - Observable variable names are typically postfixed with a `$` to indicate that they are a stream
@@ -38,8 +38,8 @@ myObservable2$.subscribe((nextValue) => console.log(nextValue));
 - While you will most commonly work with Observables that are returned from services such as the Angular **HttpClient**, simple Observables can be created using the [`of`](https://rxjs.dev/api/index/function/of) creation operator provided by **RxJS**
 - `const myObs$ = of(1, 2, 3, 4)` creates an Observable that will emit each of the numbers in sequence when you subscribe to the stream
 - Observables can be chained with a call to its [`pipe`](https://rxjs.dev/guide/operators#piping) method which accepts single or multiple **operators** to transform the stream
-- For instance when the **RxJS** [`map`](https://rxjs.dev/api/index/function/map) function is supplied as an argument to `pipe`, it works similarly to the standard JavaScript array `map` method, but transforms each value as it is received over time rather than immediately iterating over all elements
-- More complex higher order operators such as [`mergeMap`](https://rxjs.dev/api/index/function/mergeMap), [`switchMap`](https://rxjs.dev/api/index/function/switchMap) and [`concatMap`](https://rxjs.dev/api/index/function/concatMap) allow combining streams and dynamically altering the stream topology (these will be touched on later in the workshop)
+- For example, when the **RxJS** [`map`](https://rxjs.dev/api/index/function/map) function is supplied as an argument to `pipe`, it works similarly to the standard JavaScript array `map` method, but transforms each value as it is received over time rather than immediately iterating over all elements
+- More complex higher order operators such as [`mergeMap`](https://rxjs.dev/api/index/function/mergeMap), [`switchMap`](https://rxjs.dev/api/index/function/switchMap), and [`concatMap`](https://rxjs.dev/api/index/function/concatMap) allow combining streams and dynamically altering the stream topology (these will be touched on later in the workshop)
 
 </div>
 
@@ -69,7 +69,7 @@ myObs$.pipe(concatMap((val) => of(`Delayed by: ${val}ms`).pipe(delay(val))));
 
 # Step 0: Trying it out
 
-- Observe the behaviour of the stream in your browsers console as you update the code
+- Observe the behaviour of the stream in your browser's console as you update the code
 - Pay particular attention to the fact that the Observable is completely inert until you subscribe to the stream
 - 💡 You can remove this code before continuing to the next step
 
