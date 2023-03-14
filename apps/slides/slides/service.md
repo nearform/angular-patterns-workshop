@@ -53,7 +53,7 @@ export const environment = {
 };
 ```
 
-- Within your code import from `environment.ts` and Angular will switch out the appropriate file at build/serve/test time:
+- When you import from `environment.ts`, Angular will switch out the appropriate file at build/serve/test time:
 
 ```typescript
 import { environment } from 'environments/environment';
@@ -82,7 +82,7 @@ class MyService implements OnInit {
 }
 ```
 
-- 💡 You should always unsubscribe from an Observable when a component is destroyed, this is covered in the next step
+- 💡 You should always unsubscribe from an Observable when a component is destroyed - this is covered in the next step
 - 💡 This workshop provides an `ApiService` that wraps the `HttpClient` and adds authentication headers
 - 💡 In this workshop you should use the `ApiService` rather than the `HttpClient` directly to avoid authentication errors from TMDB
 

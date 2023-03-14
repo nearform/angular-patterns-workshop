@@ -46,7 +46,7 @@ class MyComponent {
 - 💡 Speed things up by copying and pasting the relevant code from the movie list component (while removing the `*ngFor` directive)
 - 💡 You will need to convert the relative `poster_path` to an absolute URL using the `tmdbPosterThumbnailUrl` utility provided in `@app/utilities`
 - 💡 Add a non-null assertion to the `movie` (`@Input() movie!: MovieSummary;`) property to let TypeScript know that you will always pass this to the component (or alternatively use [a more comprehensive approach](https://timdeschryver.dev/blog/required-input-parameters) for required inputs)
-- 💡Surround the image and overview in a container with a `flex` class to place the image and text side by side to each other
+- 💡 Surround the image and overview in a container with a `flex` class to place the image and text next to each other
 
 </div>
 

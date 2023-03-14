@@ -54,7 +54,7 @@ const myObservable = combineLatest(
 - 💡 You only need to return a list of movie ids which can be extracted from the returned payload
 - Use the `combineLatest` operator in the movie list component to combine the two streams
 - 💡 You can use the helper function `withWatchlistFlag` (from `@app/utilities`) to combine the arrays from the two streams, e.g. `withWatchListFlag(moviesQuery?.data, watchListQuery?.data)`
-- Use the boolean flag that is now included in each movie summary object to disable the "Add to watchlist" button if the movie is already on the users watchlist
+- Use the boolean flag that is now included in each movie summary object to disable the "Add to watchlist" button if the movie is already on the user's watchlist
 
 </div>
 

@@ -26,7 +26,7 @@ this.returnsObservable().subscribe((success) => {
 - To prevent nesting and make usage more ergonomic, **RxJS** lets you apply a number of strategies to flattening streams
 - This is at the core of how asynchronous behaviour is defined in the library
 - **RxJS** supplies a number of flattening operators including `mergeMap`, `concatMap`, `exhaustMap` and `switchMap` which take the current value of the primary stream and return an **inner** stream
-- For instance the behaviour of `concatMap` is to queue up all emissions from the primary stream one by one to execute the function supplied:
+- The behaviour of `concatMap`, for example, is to queue up all emissions from the primary stream one by one to execute the function supplied:
 
 ```typescript
 // An Observable stream of paths
@@ -66,9 +66,9 @@ getResults$.subscribe((response) => {
 
 - Add a new `Subject` property to the movie list component that takes a `number` as its generic parameter
 - Trigger this stream when the "Add to watchlist" event occurs in the movie summary card, passing in the movie id to the `next` method
-- On component initialization subscribe to this stream and use a suitable **RxJs** operator to call the watchlist endpoint to add the movie to the users watchlist
+- On component initialization subscribe to this stream and use a suitable **RxJs** operator to call the watchlist endpoint to add the movie to the user's watchlist
 - In flight requests should be cancelled when a new "Add to watchlist" click is received
-- Similar to the previous **unsubscribe** challenge ensure that any in flight requests are cancelled on navigating away from the page
+- Similar to the previous **unsubscribe** challenge, ensure that any in flight requests are cancelled on navigating away from the page
 
 </div>
 
