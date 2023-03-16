@@ -7,7 +7,7 @@
   },
   // install dependencies and start app
   "updateContentCommand": "npm install",
-  "postAttachCommand": "npm run dev",
+  "postAttachCommand": "npm run movies",
   // open app.tsx once container is built
   "customizations": {
     "codespaces": {
