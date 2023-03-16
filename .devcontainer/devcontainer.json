@@ -1,17 +1,20 @@
 {
-  // image being used
+  // Image being used
   "image": "mcr.microsoft.com/devcontainers/universal:2",
-  // set minimum cpu
+  // Set minimum cpu
   "hostRequirements": {
     "cpus": 4
   },
-  // install dependencies and start app
+  // Install dependencies and start app
   "updateContentCommand": "npm install",
-  "postAttachCommand": "npm run slides",
-  // open app.tsx once container is built
+  // "postAttachCommand": "npm run slides",
+  // Open files once container is built
   "customizations": {
     "codespaces": {
-      "openFiles": ["apps/movies/src/start-here/start-here.component.ts"]
+      "openFiles": [
+        "README.md",
+        "apps/movies/src/start-here/start-here.component.ts"
+      ]
     },
     // install some vscode extensions
     "vscode": {
@@ -21,15 +24,6 @@
         "firsttris.vscode-jest-runner",
         "dbaeumer.vscode-eslint"
       ]
-    }
-  },
-  // connect to remote server
-  "forwardPorts": [3030],
-  // give port a label and open a preview of the app
-  "portsAttributes": {
-    "3030": {
-      "label": "Movies Application",
-      "onAutoForward": "openPreview"
     }
   }
 }
