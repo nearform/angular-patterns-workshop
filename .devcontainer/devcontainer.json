@@ -7,7 +7,7 @@
   },
   // install dependencies and start app
   "updateContentCommand": "npm install",
-  "postAttachCommand": "npm run movies",
+  "postAttachCommand": "npm run slides",
   // open app.tsx once container is built
   "customizations": {
     "codespaces": {
@@ -24,10 +24,10 @@
     }
   },
   // connect to remote server
-  "forwardPorts": [4200],
+  "forwardPorts": [3030],
   // give port a label and open a preview of the app
   "portsAttributes": {
-    "3000": {
+    "3030": {
       "label": "Movies Application",
       "onAutoForward": "openPreview"
     }
