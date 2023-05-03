@@ -44,7 +44,7 @@
     "@nrwl/angular": "16.0.1",
     "@nrwl/cypress": "16.0.3",
     "@nrwl/eslint-plugin-nx": "16.0.3",
-    "@nrwl/jest": "16.0.1",
+    "@nrwl/jest": "16.0.3",
     "@nrwl/js": "16.0.3",
     "@nrwl/linter": "16.0.1",
     "@nrwl/workspace": "16.0.1",
