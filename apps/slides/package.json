@@ -13,6 +13,6 @@
   "devDependencies": {
     "@slidev/cli": "^0.40.16",
     "playwright-chromium": "^1.33.0",
-    "slidev-theme-nearform": "^1.5.4"
+    "slidev-theme-nearform": "^1.5.5"
   }
 }
