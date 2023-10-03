@@ -21,7 +21,7 @@ Open and follow the slide deck at https://nearform.github.io/angular-patterns-wo
 - Add a TMDB API key:
   - Sign up to [The Movie Database](https://www.themoviedb.org/) 
   - Make a note of your API key at Settings -> API -> Request an API Key -> Developer -> API Key (v3 auth)
-  - Copy `apps/movies/src/environment/environment.ts` to `apps/movies/src/environment/environment.development.ts`
+  - Copy `apps/movies/src/environments/environment.ts` to `apps/movies/src/environments/environment.development.ts`
   - Update the `apiKey` property with the value of your API key
 - `npm i`
 - `npm run movies` to start the application
