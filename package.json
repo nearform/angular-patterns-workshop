@@ -46,7 +46,7 @@
     "@nx/eslint-plugin": "16.3.2",
     "@nx/jest": "17.1.2",
     "@nx/js": "16.3.2",
-    "@nx/linter": "16.10.0",
+    "@nx/linter": "17.2.7",
     "@nx/workspace": "16.10.0",
     "@schematics/angular": "~16.0.5",
     "@types/jest": "^29.5.2",
