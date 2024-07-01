@@ -52,7 +52,7 @@
     "@nx/linter": "16.10.0",
     "@nx/workspace": "19.3.1",
     "@schematics/angular": "~16.0.5",
-    "@types/jest": "^29.5.2",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.8.3",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.62.0",
