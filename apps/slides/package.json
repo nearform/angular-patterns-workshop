@@ -11,7 +11,7 @@
   "dependencies": {},
   "license": "UNLICENSED",
   "devDependencies": {
-    "@slidev/cli": "^0.43.13",
+    "@slidev/cli": "^52.19.1",
     "playwright-chromium": "^1.44.1",
     "slidev-theme-nearform": "^2.0.0"
   }
