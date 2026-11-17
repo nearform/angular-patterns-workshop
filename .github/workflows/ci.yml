@@ -10,6 +10,9 @@ jobs:
   test:
     name: Lint and test
     runs-on: ubuntu-latest
+    # Guard against hung steps (e.g. a dependency postinstall stalling on a
+    # dead download CDN) burning the 6h Actions default before it's cancelled.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
