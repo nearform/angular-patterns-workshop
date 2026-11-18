@@ -1,13 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+
 import { MatCardModule } from '@angular/material/card';
 import { MovieSummary } from '@app/utilities';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-movie-summary-card',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <mat-card>
       <mat-card-header>

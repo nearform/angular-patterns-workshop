@@ -6,23 +6,23 @@ import {
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+  withXhr,
+} from '@angular/common/http';
 import { provideServerErrorInterceptor } from './app/server-error-interceptor';
 import { provideClientErrorHandler } from './app/client-error-handler';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     provideClientErrorHandler(),
     provideServerErrorInterceptor(),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
-    provideHttpClient(),
-    importProvidersFrom(
-      // Needed to allow http interceptors to work
-      HttpClientModule,
-      BrowserAnimationsModule,
-      MatSnackBarModule
-    ),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+    importProvidersFrom(BrowserAnimationsModule, MatSnackBarModule),
   ],
 }).catch((err) => console.error(err));

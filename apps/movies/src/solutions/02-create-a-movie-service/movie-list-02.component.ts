@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core'
-import { Movie02Service } from './movie-02.service'
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Movie02Service } from './movie-02.service';
 
 @Component({
   selector: 'app-solution-02',
   standalone: true,
-  template: `<p>Hello world!!!</p>`
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<p>Hello world!!!</p>`,
 })
 export class MovieList02Component implements OnInit {
   constructor(private movieService: Movie02Service) {}
 
   ngOnInit() {
-    this.movieService.getPopular().subscribe(movies => {
-      console.log(movies)
-    })
+    this.movieService.getPopular().subscribe((movies) => {
+      console.log(movies);
+    });
   }
 }
