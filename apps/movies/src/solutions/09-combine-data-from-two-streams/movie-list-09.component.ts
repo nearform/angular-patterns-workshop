@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { combineLatest, map, Subject, switchMap, takeUntil } from 'rxjs';
@@ -13,7 +18,6 @@ import { MovieSummaryCard09Component } from './movie-summary-card-09.component';
 
 @Component({
   selector: 'app-solution-09',
-  standalone: true,
   imports: [
     CommonModule,
     MatListModule,
@@ -24,26 +28,32 @@ import { MovieSummaryCard09Component } from './movie-summary-card-09.component';
     MatProgressSpinnerModule,
     MovieSummaryCard09Component,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <ng-container *ngIf="movies$ | async as movies">
-      <div *ngIf="movies.isLoading" class="centered-content height-page">
-        <mat-progress-spinner
-          color="primary"
-          mode="indeterminate"
-          diameter="50"
-        ></mat-progress-spinner>
-      </div>
-      <ng-container *ngIf="!movies.isLoading">
-        <div *ngIf="movies$ | async as movies" class="stack">
-          <app-movie-summary-card
-            *ngFor="let movie of movies.data"
-            [movie]="movie"
-            (addToWatchlist)="addToWatchlist$.next($event)"
-          >
-          </app-movie-summary-card>
+    @if (movies$ | async; as movies) {
+      @if (movies.isLoading) {
+        <div class="centered-content height-page">
+          <mat-progress-spinner
+            color="primary"
+            mode="indeterminate"
+            diameter="50"
+          ></mat-progress-spinner>
         </div>
-      </ng-container>
-    </ng-container>
+      }
+      @if (!movies.isLoading) {
+        @if (movies$ | async; as movies) {
+          <div class="stack">
+            @for (movie of movies.data; track movie) {
+              <app-movie-summary-card
+                [movie]="movie"
+                (addToWatchlist)="addToWatchlist$.next($event)"
+              >
+              </app-movie-summary-card>
+            }
+          </div>
+        }
+      }
+    }
   `,
 })
 export class MovieList09Component implements OnInit, OnDestroy {
@@ -57,7 +67,7 @@ export class MovieList09Component implements OnInit, OnDestroy {
     map(([moviesQuery, watchlistQuery]) => ({
       isLoading: moviesQuery.isLoading || watchlistQuery.isLoading,
       data: withWatchlistFlag(moviesQuery?.data, watchlistQuery?.data),
-    }))
+    })),
   );
 
   constructor(private moviesService: Movie09Service) {}
@@ -66,7 +76,7 @@ export class MovieList09Component implements OnInit, OnDestroy {
     this.addToWatchlist$
       .pipe(
         takeUntil(this.onDestroy$),
-        switchMap((movieId) => this.moviesService.postWatchlist(movieId, true))
+        switchMap((movieId) => this.moviesService.postWatchlist(movieId, true)),
       )
       .subscribe();
   }

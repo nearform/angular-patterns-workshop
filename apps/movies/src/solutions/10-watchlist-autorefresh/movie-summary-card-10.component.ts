@@ -1,13 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+
 import { MatCardModule } from '@angular/material/card';
 import { MovieSummaryWithWatchListFlag } from '@app/utilities';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-movie-summary-card',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <mat-card>
       <mat-card-header>
@@ -22,22 +28,24 @@ import { MatButtonModule } from '@angular/material/button';
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button
-          mat-stroked-button
-          color="primary"
-          *ngIf="!movie.onWatchlist"
-          (click)="addToWatchlist.emit(movie.id)"
-        >
-          Add to watchlist
-        </button>
-        <button
-          mat-stroked-button
-          color="warn"
-          *ngIf="movie.onWatchlist"
-          (click)="removeFromWatchlist.emit(movie.id)"
-        >
-          Remove from watchlist
-        </button>
+        @if (!movie.onWatchlist) {
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="addToWatchlist.emit(movie.id)"
+          >
+            Add to watchlist
+          </button>
+        }
+        @if (movie.onWatchlist) {
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="removeFromWatchlist.emit(movie.id)"
+          >
+            Remove from watchlist
+          </button>
+        }
       </mat-card-actions>
     </mat-card>
   `,

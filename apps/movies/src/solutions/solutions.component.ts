@@ -1,12 +1,12 @@
-import { Component } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { MatListModule } from '@angular/material/list'
-import { RouterLink } from '@angular/router'
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+
+import { MatListModule } from '@angular/material/list';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-solutions',
-  standalone: true,
-  imports: [CommonModule, MatListModule, RouterLink],
+  imports: [MatListModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <mat-list>
       <mat-list-item
@@ -60,6 +60,6 @@ import { RouterLink } from '@angular/router'
         ></mat-list-item
       >
     </mat-list>
-  `
+  `,
 })
 export class SolutionsComponent {}

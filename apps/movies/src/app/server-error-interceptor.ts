@@ -16,19 +16,19 @@ class ServerErrorInterceptor implements HttpInterceptor {
   constructor(
     private loggingService: LoggingService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {}
   intercept(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       retry(1),
       catchError((error) => {
         this.loggingService.logError(
-          error.message ? error.message : error.toString()
+          error.message ? error.message : error.toString(),
         );
         if (error.status === 401) {
           this.snackBar.open(
@@ -36,12 +36,12 @@ class ServerErrorInterceptor implements HttpInterceptor {
             undefined,
             {
               duration: 3000,
-            }
+            },
           );
           this.router.navigate(['']);
         }
         return throwError(error);
-      })
+      }),
     );
   }
 }

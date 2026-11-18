@@ -10,12 +10,8 @@
     "lint": "nx lint"
   },
   "private": true,
-  "dependencies": {
-   
-  },
+  "dependencies": {},
   "keywords": [],
   "license": "UNLICENSED",
-  "devDependencies": {
-   
-  }
+  "devDependencies": {}
 }

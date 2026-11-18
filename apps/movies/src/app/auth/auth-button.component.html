@@ -1,4 +1,10 @@
-<button mat-stroked-button *ngIf="loggedOut$ | async" (click)="login()">Login</button>
-<ng-container *ngIf="userName$ | async as username">
-  <button mat-stroked-button *ngIf="loggedIn$ | async" (click)="logout()">Logout, {{username}}</button>
-</ng-container>
+@if (loggedOut$ | async) {
+  <button mat-stroked-button (click)="login()">Login</button>
+}
+@if (userName$ | async; as username) {
+  @if (loggedIn$ | async) {
+    <button mat-stroked-button (click)="logout()">
+      Logout, {{ username }}
+    </button>
+  }
+}

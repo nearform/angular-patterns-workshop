@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
@@ -10,7 +10,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-solution-04',
-  standalone: true,
   imports: [
     CommonModule,
     MatListModule,
@@ -20,19 +19,24 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatInputModule,
     MatProgressSpinnerModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <div *ngIf="movies$ | async as movies" class="stack">
-      <mat-card *ngFor="let movie of movies">
-        <mat-card-header>
-          <mat-card-title>{{ movie.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{ movie.overview }}
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+    @if (movies$ | async; as movies) {
+      <div class="stack">
+        @for (movie of movies; track movie) {
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ movie.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                {{ movie.overview }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
   `,
 })
 export class MovieList04Component {

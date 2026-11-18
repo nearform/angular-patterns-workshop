@@ -11,6 +11,9 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NX_SKIP_NX_CACHE: 'true'
+      npm_config_engine_strict: 'true'
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
