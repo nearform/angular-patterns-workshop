@@ -1,0 +1,1 @@
+import{i as e}from"./chunk-Z2I5LGMO-BCq-ITHo.js";export{e as createArchitectureServices};
