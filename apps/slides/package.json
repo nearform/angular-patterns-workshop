@@ -8,11 +8,10 @@
     "export": "slidev export"
   },
   "private": true,
-  "dependencies": {},
   "license": "UNLICENSED",
   "devDependencies": {
     "@slidev/cli": "^52.19.1",
-    "playwright-chromium": "^1.44.1",
+    "playwright-chromium": "^1.61.0",
     "slidev-theme-nearform": "^2.0.0"
   }
 }
